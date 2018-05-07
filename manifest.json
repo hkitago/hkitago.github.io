@@ -1,7 +1,6 @@
 {
   "name": "PWA Sample",
   "short_name": "PWA",
-  "background_color": "#fc980c",
   "icons": [{
       "src": "./icon-256.png",
       "sizes": "256x256",
@@ -12,5 +11,7 @@
       "type": "image/png"
     }],
   "start_url": "./?utm_source=homescreen",
-  "display": "standalone"
+  "display": "fullscreen",
+  "background_color": "#3E4EB8",
+  "theme_color": "#2F3BA2"
 }
