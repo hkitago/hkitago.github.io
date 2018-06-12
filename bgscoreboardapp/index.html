@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backgammon Scoreboard App</title>
+<link rel="manifest" href="./manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="BGScoreboard">
+<link rel="apple-touch-icon" href="./images/icons/icon-152x152.png">
+<link rel="stylesheet" href="styles/default.css">
+<link id="appearance-style" rel="stylesheet" href="styles/dark.css">
+<style>
+body{background-color:black;}
+.loader #spinner{box-sizing:border-box}
+.loader{left:50%;top:50%;position:fixed;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}
+.loader #spinner{stroke:#FFF;stroke-width:3px;-webkit-transform-origin:50%;transform-origin:50%;-webkit-animation:line 1.6s cubic-bezier(.4,0,.2,1) infinite,rotate 1.6s linear infinite;animation:line 1.6s cubic-bezier(.4,0,.2,1) infinite,rotate 1.6s linear infinite}
+@-webkit-keyframes rotate{from{-webkit-transform:rotate(0);transform:rotate(0)}to{-webkit-transform:rotate(450deg);transform:rotate(450deg)}}
+@keyframes rotate{from{-webkit-transform:rotate(0);transform:rotate(0)}to{-webkit-transform:rotate(450deg);transform:rotate(450deg)}}
+@-webkit-keyframes line{0%{stroke-dasharray:2,85.964;-webkit-transform:rotate(0);transform:rotate(0)}50%{stroke-dasharray:65.973,21.9911;stroke-dashoffset:0}100%{stroke-dasharray:2,85.964;stroke-dashoffset:-65.973;-webkit-transform:rotate(90deg);transform:rotate(90deg)}}
+@keyframes line{0%{stroke-dasharray:2,85.964;-webkit-transform:rotate(0);transform:rotate(0)}50%{stroke-dasharray:65.973,21.9911;stroke-dashoffset:0}100%{stroke-dasharray:2,85.964;stroke-dashoffset:-65.973;-webkit-transform:rotate(90deg);transform:rotate(90deg)}}
+</style>
+<link rel="icon" href="./favicon.ico">
+</head>
+<body>
+
+<div class="container main" hidden>
+	<div class="wrapper">
+		<div class="board-pane">
+			<!-- front content -->
+      <div class="score-board">
+        <div class="flip-container">
+        	<div class="flipper">
+        		<div class="front">
+        			<span></span>
+        		</div>
+        		<div class="back">
+        			<span></span>
+        		</div>
+        	</div>
+        	<div class="board">
+        	  <span></span>
+        	</div>
+        </div>
+      </div>
+      <div class="match-board">
+        <div id="match-info">
+          <span></span>
+        </div>
+        <div id="crowford-info">
+          <span></span>
+        </div>
+        <div id="settings">
+          <span>Settings</span>
+        </div>
+      </div>
+      <div class="score-board">
+        <div class="flip-container">
+        	<div class="flipper">
+        		<div class="front">
+        			<span></span>
+        		</div>
+        		<div class="back">
+        			<span></span>
+        		</div>
+        	</div>
+        	<div class="board">
+        	  <span></span>
+        	</div>
+        </div>
+      </div>
+		</div>
+		<div class="settings-pane">
+			<!-- back content -->
+			<div id="settings-wrapper">
+  			<div id="settings-section">
+  			  <h1>Settings</h1>
+  			  <ul>
+  		      <li id="appearance">
+  		        <label for="appearance-option">Appearance</label><select id="appearance-option"><option>Dark</option><option>Bright</option></select>
+  		      </li>
+  		      <li id="font">
+  		        <label for="font-option">Font</label><select id="font-option"><option>System Default</option><option>Arial</option><option>Helvetica</option><option>Times</option><option>Trebuchet MS</option><option>Verdana</option><option>Courier</option><option>Courier New</option><option>Georgia</option></select>
+  		      </li>
+  		      <!--<li id="language">
+  		        <label for="language-option">Language</label><select id="language-option"><option>English</option><option>System Default</option></select>
+  		      </li>-->
+  		      <li id="game">
+  		        <label for="game-option">Game for</label><select id="game-option"><option>Match</option><option>Money</option></select>
+  		      </li>
+    			  <li id="match-to">
+    			    <label for="pts-option">Match to</label><select id="pts-option"><option>3</option><option>5</option><option>7</option><option>9</option><option>11</option><option>13</option><option>15</option><option>17</option><option>19</option><option>21</option><option>23</option><option>25</option></select>
+  			    </li>
+  			    <li id="reset">
+  			      <span>Reset Score</span>
+  		      </li>
+  			    <li id="undo" class="disabled">
+  			      <span>Undo</span>
+  		      </li>
+		      </ul>
+  			</div>
+  			<div id="scoresheet-section">
+  			  <h1>Scoresheet</h1>
+  			  <ol></ol>
+  			</div>
+			</div>
+			<div id="done-btn">
+			  <span>Done</span>
+		  </div>
+		</div>
+	</div>
+</div>
+
+<div class="loader">
+  <svg viewBox="0 0 32 32" width="32" height="32">
+    <circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
+  </svg>
+</div>
+
+<script src="./scripts/app.js?v=201852903"></script>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+select {color:#212121;}
+.settings-pane {background-color:#DEDEDE; color:#212121;}
+#match-info {background-color:#DEDEDE; color:#212121;}
+.board {background-color:#DEDEDE; color:#212121;}
+.front, .back {background-color:#DEDEDE; color:#212121;}
+.money {text-shadow:0 0 0 #212121;}
+#settings-section > ul > li#undo span {background:#212121; color:#DEDEDE;}
