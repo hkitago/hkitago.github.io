@@ -7,9 +7,7 @@ var filesToCache = [
   './lib/idb.js',
   './styles/default.css',
   './styles/dark.css',
-  './styles/bright.css',
-  './images/ic_add_white_24px.svg',
-  './images/ic_refresh_white_24px.svg'
+  './styles/bright.css'
 ];
 
 self.addEventListener('install', function(event) {

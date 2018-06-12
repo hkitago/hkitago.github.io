@@ -1,35 +1,6 @@
 
 (function() {
   'use strict';
-
-  // Insert injected weather forecast here
-  var initialbgScroreBoardApp = {
-  };
-
-  const app = {
-    isLoading: true,
-    spinner: document.querySelector('.loader'),
-    container: document.querySelector('.main')
-  };
-
-  /*****************************************************************************
-   *
-   * Methods to update/refresh the UI
-   *
-   ****************************************************************************/
-
-  app.updateScroreBoard = function(data) {
-    if (app.isLoading) {
-      app.spinner.setAttribute('hidden', true);
-      app.container.removeAttribute('hidden');
-      app.isLoading = false;
-    }
-  };
-  setTimeout(function(){
-    app.updateScroreBoard(initialbgScroreBoardApp);
-  }, 1000);
-
-
   let dbPromise;
   let settings = {
     appearance: 'Dark',
