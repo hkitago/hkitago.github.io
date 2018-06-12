@@ -3,10 +3,8 @@
   'use strict';
 
   // Insert injected weather forecast here
-/*
   var initialbgScroreBoardApp = {
   };
-*/
 
   const app = {
     isLoading: true,
@@ -27,11 +25,9 @@
       app.isLoading = false;
     }
   };
-/*
   setTimeout(function(){
     app.updateScroreBoard(initialbgScroreBoardApp);
   }, 1000);
-*/
 
 
   let dbPromise;
