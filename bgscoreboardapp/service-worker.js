@@ -28,5 +28,5 @@ self.addEventListener('activate', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
-  console.log('[ServiceWorker] Fetch', event.request.url);
+  //console.log('[ServiceWorker] Fetch', event.request.url);
 });
