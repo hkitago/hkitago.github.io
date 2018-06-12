@@ -13,20 +13,21 @@ var filesToCache = [
 ];
 
 self.addEventListener('install', function(e) {
-  console.log('[ServiceWorker] Install');
+  //console.log('[ServiceWorker] Install');
   e.waitUntil(
-    caches.open(cacheName).then(function(cache) {
+    //caches.open(cacheName).then(function(cache) {
       console.log('[ServiceWorker] Caching App Shell');
       return cache.addAll(filesToCache);
     })
   );
 });
 
+
 self.addEventListener('activate', function(e) {
-  console.log('[ServiceWorker] Activate');
-  e.waitUntil();
+  //console.log('[ServiceWorker] Activate');
+  //e.waitUntil();
 });
 
 self.addEventListener('fetch', function(e) {
-  console.log('[ServiceWorker] Fetch', e.request.url);
+  //console.log('[ServiceWorker] Fetch', e.request.url);
 });
