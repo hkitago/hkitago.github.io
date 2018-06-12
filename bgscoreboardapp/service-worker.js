@@ -1,5 +1,5 @@
-var dataCacheName = 'bgScoreBoardAppData-v1';
-var cacheName = 'bgScoreBoardApp-1';
+var dataCacheName = 'bgScoreBoardAppData-v2';
+var cacheName = 'bgScoreBoardApp-2';
 var filesToCache = [
   './',
   './index.html',
@@ -16,17 +16,17 @@ self.addEventListener('install', function(e) {
   console.log('[ServiceWorker] Install');
   e.waitUntil(
     caches.open(cacheName).then(function(cache) {
-      console.log('[ServiceWorker] Caching App Shell');
+      //console.log('[ServiceWorker] Caching App Shell');
       return cache.addAll(filesToCache);
     })
   );
 });
 
 self.addEventListener('activate', function(e) {
-  console.log('[ServiceWorker] Activate');
+  //console.log('[ServiceWorker] Activate');
   e.waitUntil();
 });
 
 self.addEventListener('fetch', function(e) {
-  console.log('[ServiceWorker] Fetch', e.request.url);
+  //console.log('[ServiceWorker] Fetch', e.request.url);
 });
