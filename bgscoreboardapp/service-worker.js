@@ -12,16 +12,21 @@ var filesToCache = [
   './images/ic_refresh_white_24px.svg'
 ];
 
-self.addEventListener('install', (event) => {
-  event.waitUntil(self.skipWaiting());
+self.addEventListener('install', function(event) {
+  console.log('[ServiceWorker] Install');
+  event.waitUntil(
+    caches.open(cacheName).then(function(cache) {
+      console.log('[ServiceWorker] Caching App Shell');
+      return cache.addAll(filesToCache);
+    })
+  );
 });
 
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', function(event) {
+  console.log('[ServiceWorker] Activate');
   event.waitUntil(self.clients.claim());
 });
 
-/*
-self.addEventListener('fetch', function(e) {
-  console.log('[ServiceWorker] Fetch', e.request.url);
+self.addEventListener('fetch', function(event) {
+  console.log('[ServiceWorker] Fetch', event.request.url);
 });
-*/
