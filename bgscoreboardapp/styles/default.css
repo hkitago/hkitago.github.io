@@ -63,6 +63,8 @@ select:focus {outline:0;}
 #scoresheet-section > ol > li {font-size:3vw; margin:0 2vw 1vh 0; pointer-events:auto; overflow:hidden;}
 #scoresheet-section > ol > li:before {content:counter(item) ".";counter-increment: item; color:gray; margin-right:0.5vw;}
 
+#advertising {width:320px; height:50px; position:absolute; left:2.5vw; bottom:17.5vh;}
+
 #done-btn {width:20%; height:9%; position:absolute; left:40%; bottom:0.1vh; color:gray; font-size:2.5vw; line-height:6vh; text-align:center; overflow:hidden; pointer-events:auto;}
 
 @media (orientation: portrait) {
@@ -78,6 +80,8 @@ select {font-size:3.75vh;}
 #scoresheet-section > ol {height:45vh; width:90%; margin-left:5vw;}
 #scoresheet-section > ol > li {font-size:4vh; margin-bottom:0;}
 #scoresheet-section > ol > li:before {margin-right:0vw;}
+
+#advertising {left:5vw; bottom:2vh;}
 
 #done-btn {display:none;}
 }
