@@ -59,11 +59,11 @@ select:focus {outline:0;}
 #settings-section > ul > li#undo span {background:#DEDEDE; color:#212121; border-radius:3vw; padding:0 2vw;}
 #settings-section > ul > li.disabled {opacity:.3;}
 
-#scoresheet-section > ol {list-style:none; height:75%; width:85%; display:flex; flex-direction:column; flex-wrap:wrap; overflow-x:scroll; -webkit-overflow-scrolling:touch; margin:0; padding:0; pointer-events:auto; touch-action:pan-x; counter-reset:item; margin-left:4vw;}
+#scoresheet-section > ol {list-style:none; height:65%; width:85%; display:flex; flex-direction:column; flex-wrap:wrap; overflow-x:scroll; -webkit-overflow-scrolling:touch; margin:0; padding:0; pointer-events:auto; touch-action:pan-x; counter-reset:item; margin-left:4vw;}
 #scoresheet-section > ol > li {font-size:3vw; margin:0 2vw 1vh 0; pointer-events:auto; overflow:hidden;}
 #scoresheet-section > ol > li:before {content:counter(item) ".";counter-increment: item; color:gray; margin-right:0.5vw;}
 
-#advertising {width:320px; height:50px; position:absolute; left:2.5vw; bottom:17.5vh;}
+#advertising {width:100%; height:50px; position:absolute; left:0; bottom:12.5vh; text-align:center;}
 
 #done-btn {width:20%; height:9%; position:absolute; left:40%; bottom:0.1vh; color:gray; font-size:2.5vw; line-height:6vh; text-align:center; overflow:hidden; pointer-events:auto;}
 
@@ -81,7 +81,7 @@ select {font-size:3.75vh;}
 #scoresheet-section > ol > li {font-size:4vh; margin-bottom:0;}
 #scoresheet-section > ol > li:before {margin-right:0vw;}
 
-#advertising {left:5vw; bottom:2vh;}
+#advertising {width:100%; bottom:1vh;}
 
 #done-btn {display:none;}
 }
