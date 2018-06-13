@@ -63,7 +63,7 @@ select:focus {outline:0;}
 #scoresheet-section > ol > li {font-size:3vw; margin:0 2vw 1vh 0; pointer-events:auto; overflow:hidden;}
 #scoresheet-section > ol > li:before {content:counter(item) ".";counter-increment: item; color:gray; margin-right:0.5vw;}
 
-#advertising {width:100%; height:50px; position:absolute; left:0; bottom:12.5vh; text-align:center;}
+#advertising {width:100%; height:50px; position:absolute; left:0; bottom:12.5vh; text-align:center; pointer-events:auto;}
 
 #done-btn {width:20%; height:9%; position:absolute; left:40%; bottom:0.1vh; color:gray; font-size:2.5vw; line-height:6vh; text-align:center; overflow:hidden; pointer-events:auto;}
 
