@@ -11,7 +11,7 @@
     isCrawford: false,
     isPostCrawford: false,
     score: [0,0],
-    created: new Date().getTime()
+    created: Date.now()
   };
   let undoLogs = [];
   let undoSettings = {};
@@ -292,7 +292,7 @@
     dbPromise.then(function(db) {
       const tx = db.transaction('settings', 'readwrite');
       const store = tx.objectStore('settings');
-      settings.update = new Date().getTime();
+      settings.update = Date.now();
       store.put(settings, 1);
       return tx.complete.then(() => {
         //console.log('Added item to the store.');
@@ -431,7 +431,7 @@
         score: settings.score,
         isCrawford: settings.isCrawford,
         isPostCrawford: settings.isPostCrawford,
-        created: new Date().getTime()
+        created: Date.now()
       });
       return tx.complete.then(() => {
         request.then((result) => {
