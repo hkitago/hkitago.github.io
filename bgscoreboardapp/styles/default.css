@@ -60,6 +60,10 @@ select:focus {outline:0;}
 #settings-section > ul > li#undo span {background:#DEDEDE; color:#212121; border-radius:3vw; padding:0 2vw;}
 #settings-section > ul > li.disabled {opacity:.3;}
 
+.social{margin:3vh 0 0 3vw; pointer-events:auto;}
+.social iframe{vertical-align:middle;}
+.social span{margin:0 3vw 0 0;}
+
 #scoresheet-section > ol {list-style:none; height:65%; width:85%; display:flex; flex-direction:column; flex-wrap:wrap; overflow-x:scroll; -webkit-overflow-scrolling:touch; margin:0; padding:0; pointer-events:auto; touch-action:pan-x; counter-reset:item; margin-left:4vw;}
 #scoresheet-section > ol > li {font-size:3vw; margin:0 2vw 1vh 0; pointer-events:auto; overflow:hidden;}
 #scoresheet-section > ol > li:before {content:counter(item) ".";counter-increment: item; color:gray; margin-right:0.5vw;}
@@ -75,12 +79,14 @@ select:focus {outline:0;}
   .settings-pane > #settings-wrapper {display:block; height:auto;}
   #settings-section {width:100%;}
   #scoresheet-section {width:100%;}
-  .settings-pane > #settings-wrapper > div > h1 {font-size:3vh; margin:1vh 2vw 1vh;}
+  .settings-pane > #settings-wrapper > div > h1 {font-size:3vh; margin:1vh 2vw 0;}
   select {font-size:3.75vh;}
   #settings-section > ul {margin:0 0 0 5vw;}
   #settings-section > ul > li {font-size:3.75vh; margin-bottom:0.75vh;}
   
-  #scoresheet-section > ol {height:45vh; width:90%; margin-left:5vw;}
+  .social{margin:2vh 0 0 5vw; pointer-events:auto;}
+
+  #scoresheet-section > ol {height:30vh; width:90%; margin:0 0 0 5vw;}
   #scoresheet-section > ol > li {font-size:4vh; margin-bottom:0;}
   #scoresheet-section > ol > li:before {margin-right:0vw;}
   
