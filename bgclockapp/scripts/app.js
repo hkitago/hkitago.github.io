@@ -503,7 +503,7 @@ dbPromise.then(function(db) {
     apps.timeBoardNodes[i].addEventListener('click', function() {
       if(Number(this.id) === settings.turnNow && (apps.isDelayPaused === false || apps.isPaused === false)) {
         beep.call(this);
-        apps.timeBoardNodes[settings.turnNow].classList.add('glow');
+        apps.timeBoardNodes[settings.turnNow].style.WebkitAnimation = 'glow .2s';
         stopTimer.call(this);
         settings.allottedTime[settings.turnNow] = apps.remainingTime > 0 ? apps.remainingTime : settings.allottedTime[settings.turnNow];
         addLogs.call(this).then(function(){
@@ -511,6 +511,7 @@ dbPromise.then(function(db) {
           settings.turnNow = settings.turnNow === 0 ? 1 : 0;
           updateSettingsOS.call(this);
           resumeTimer.call(this);
+          apps.timeBoardNodes[settings.turnNow].style.WebkitAnimation = '';
         });
       }
     }, {passive:false});

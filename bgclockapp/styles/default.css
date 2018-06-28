@@ -23,9 +23,6 @@ body {background-color:black;}
 .board-pane .disabled {opacity:.3;}
 .time-board > span {width:100%; position:absolute; top:50%; left:0; transform: translateY(-50%);}
 
-/* css - How do I animate a glowing effect on text? - Stack Overflow https://stackoverflow.com/questions/7061420/how-do-i-animate-a-glowing-effect-on-text/7061505#7061505 */
-.grow {animation: glow .2.5s 1;}
-
 .controls-board {width:20%; position:relative;;}
 #start-btn {width:100%; position:absolute; top:0; color:gray; font-size:2.5vw; text-align:center; padding:5vh 0; overflow:hidden; pointer-events:auto;}
 #delay-time {height:100%; text-align:center; font-size:7.5vw; color:#DEDEDE;}
