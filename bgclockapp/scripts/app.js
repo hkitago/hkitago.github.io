@@ -594,6 +594,7 @@ dbPromise.then(function(db) {
     if(m.matches) {
       document.querySelector('.container').classList.add('hover');
     } else {
+      updateClockBoardPane.call(this);
       document.querySelector('.container').classList.remove('hover');
     }
   });
