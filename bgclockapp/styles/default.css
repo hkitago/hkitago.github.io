@@ -55,6 +55,8 @@ input {width:auto; padding-right:1vw;}
 #logs-section > ol > li {font-size:3vw; margin:0 2vw 1vh 0; pointer-events:auto; overflow:hidden;}
 #logs-section > ol > li:before {content:counter(item) ".";counter-increment: item; color:gray; margin-right:0.5vw;}
 
+#notes {display:none;}
+
 #advertising {width:100%; height:50px; position:absolute; left:0; bottom:12.5vh; text-align:center; pointer-events:auto;}
 
 #done-btn {width:20%; position:absolute; left:40%; bottom:0; color:gray; font-size:2.5vw; text-align:center; padding:5vh 0; overflow:hidden; pointer-events:auto;}
