@@ -574,7 +574,7 @@ dbPromise.then(function(db) {
   }
   
   if (typeof document.addEventListener != "undefined" && typeof document[hidden] != "undefined") {
-   document.addEventListener('visibilitychange', function() {
+   document.addEventListener(visibilitychange, function() {
       if (document[hidden]) {
         stopTimer.call(this);
         updateStartBtn.call(this);
