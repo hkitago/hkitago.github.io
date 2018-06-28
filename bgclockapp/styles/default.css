@@ -58,7 +58,7 @@ input {width:auto; padding-right:1vw;}
 #notes {display:none;}
 
 #advertising {display:none;}
-#advertising-1 {pointer-events:auto;}
+#advertising-1 {margin:4vh 0 0 4vw;pointer-events:auto;}
 
 #done-btn {width:20%; position:absolute; left:40%; bottom:0; color:gray; font-size:2.5vw; text-align:center; padding:5vh 0; overflow:hidden; pointer-events:auto;}
 
