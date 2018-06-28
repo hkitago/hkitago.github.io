@@ -272,7 +272,7 @@ dbPromise.then(function(db) {
         ,   x = setInterval(function() {
         	beep.call(this);
         	i++;
-        	if (i > 10) {
+        	if (i > 7) {
         		clearInterval(x);
         	}
         }, 250);
@@ -290,7 +290,7 @@ dbPromise.then(function(db) {
   };
   
   const updateTimerCount = function(time){
-    return new Date(1000 * time).toISOString().substr(11, 8).replace(/^(00:)+/, '');
+    return time < 1 ? 0 : new Date(1000 * time).toISOString().substr(11, 8).replace(/^[0:]+/, '');
   };
 
   /*****************************************************************************
