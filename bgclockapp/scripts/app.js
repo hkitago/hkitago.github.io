@@ -212,6 +212,7 @@ dbPromise.then(function(db) {
   };
   
   const updateStartBtn = function(){
+    document.getElementById('start-btn').style.display = (settings.allottedTime[0] === 0 || settings.allottedTime[1] === 0) ? 'none' : 'block';
     if(apps.isDelayPaused && apps.isPaused) {
       document.getElementById('start-btn').children[0].textContent = isStarted.call(this) ? 'Start' : 'Resume';
     } else {
@@ -264,6 +265,18 @@ dbPromise.then(function(db) {
       apps.remainingTime = settings.allottedTime[settings.turnNow] - (performance.now() - apps.resumeTime) / 1000
       if (apps.remainingTime <= 0){
         apps.remainingTime = 0;
+        stopTimer.call(this);
+        updateStartBtn.call(this);
+
+        let i = 1
+        ,   x = setInterval(function() {
+        	beep.call(this);
+        	i++;
+        	if (i > 10) {
+        		clearInterval(x);
+        	}
+        }, 250);
+
         clearInterval(apps.countIntval);
       }
       apps.timeBoardNodes[settings.turnNow].children[0].textContent = updateTimerCount.call(this, apps.remainingTime);
@@ -277,7 +290,7 @@ dbPromise.then(function(db) {
   };
   
   const updateTimerCount = function(time){
-    return new Date(1000 * time).toISOString().substr(11, 8).replace(/^[0:]+/, '');
+    return new Date(1000 * time).toISOString().substr(11, 8).replace(/^(00:)+/, '');
   };
 
   /*****************************************************************************
