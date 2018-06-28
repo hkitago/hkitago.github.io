@@ -558,8 +558,11 @@ dbPromise.then(function(db) {
    *
    ****************************************************************************/
 
-  document.addEventListener('visibilitychange', function() {
-    if (document.hidden) {
+  const hidden = (typeof document.webkitHidden !== "undefined") ? 'webkitHidden' : 'hidden';
+  const visibilityChange = (typeof document.webkitHidden !== "undefined") ? 'webkitvisibilitychange' : 'visibilityChange';
+
+  document.addEventListener(visibilityChange, function() {
+    if (document[hidden]) {
       stopTimer.call(this);
       updateStartBtn.call(this);
     }
