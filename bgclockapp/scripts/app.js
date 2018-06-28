@@ -557,30 +557,13 @@ dbPromise.then(function(db) {
    * https://qiita.com/ta__ho/items/937257c3c9891bdf2d38
    *
    ****************************************************************************/
-  let hidden = null;
-  let visibilityChange = null;
-  if (typeof document.hidden !== "undefined") {
-    hidden = "hidden";
-    visibilityChange = "visibilitychange";
-  } else if (typeof document.mozHidden !== "undefined") {
-    hidden = "mozHidden";
-    visibilityChange = "mozvisibilitychange";
-  } else if (typeof document.msHidden !== "undefined") {
-    hidden = "msHidden";
-    visibilityChange = "msvisibilitychange";
-  } else if (typeof document.webkitHidden !== "undefined") {
-    hidden = "webkitHidden";
-    visibilityChange = "webkitvisibilitychange";
-  }
-  
-  if (typeof document.addEventListener != "undefined" && typeof document[hidden] != "undefined") {
-   document.addEventListener(visibilitychange, function() {
-      if (document[hidden]) {
-        stopTimer.call(this);
-        updateStartBtn.call(this);
-      }
-   }, {passive:false});
-  }
+
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      stopTimer.call(this);
+      updateStartBtn.call(this);
+    }
+  }, {passive:false});
   
   window.addEventListener('blur', function(){
     stopTimer.call(this);
