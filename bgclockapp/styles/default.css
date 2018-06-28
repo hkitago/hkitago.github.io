@@ -57,7 +57,7 @@ input {width:auto; padding-right:1vw;}
 
 #notes {display:none;}
 
-#advertising {width:100%; height:50px; position:absolute; left:0; bottom:12.5vh; text-align:center; pointer-events:auto;}
+#advertising { pointer-events:auto;}
 
 #done-btn {width:20%; position:absolute; left:40%; bottom:0; color:gray; font-size:2.5vw; text-align:center; padding:5vh 0; overflow:hidden; pointer-events:auto;}
 
@@ -75,7 +75,7 @@ input, select {font-size:3.75vh;}
 #logs-section > ol > li {font-size:4vh; margin-bottom:0;}
 #logs-section > ol > li:before {margin-right:0vw;}
 
-#advertising {width:100%; bottom:1vh;}
+#advertising {}
 
 #done-btn {display:none;}
 }
