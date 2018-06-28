@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<head>
+<title>Backgammon Clock App</title>
+<link rel="manifest" href="./manifest.json">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="BGClock">
+<link rel="stylesheet" href="styles/default.css">
+<link id="appearance-style" rel="stylesheet" href="styles/dark.css">
+<link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAADPkU4A////AIABAAA//AAAZ/4AAEP+AABD/gAAZ/4AAH5+AAB8PgAAfD4AAH5+AAB/5gAAf8IAAH/CAAB/5gAAP/wAAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" rel="icon" type="image/x-icon">
+</head>
+<body>
+<div class="container">
+	<div class="wrapper">
+		<div class="board-pane">
+			<!-- front content -->
+      <div class="time-board" id="0">
+        <span></span>
+      </div>
+      <div class="controls-board">
+        <div id="delay-time">
+          <span></span>
+        </div>
+        <div id="start-btn">
+          <span></span>
+        </div>
+        <div id="settings-btn">
+          <span>Settings</span>
+        </div>
+      </div>
+      <div class="time-board" id="1">
+        <span></span>
+      </div>
+		</div>
+		<div class="settings-pane">
+			<!-- back content -->
+			<div id="settings-wrapper">
+  			<div id="settings-section">
+  			  <h1>Settings</h1>
+  			  <ul>
+  		      <li id="appearance">
+  		        <label for="appearance-option">Appearance</label><select id="appearance-option"><option>Dark</option><option>Bright</option></select>
+  		      </li>
+  		      <li id="font">
+  		        <label for="font-option">Font</label><select id="font-option"><option>System Default</option><option>Arial</option><option>Helvetica</option><option>Times</option><option>Trebuchet MS</option><option>Verdana</option><option>Courier</option><option>Courier New</option><option>Georgia</option></select>
+  		      </li>
+  		      <li id="beep">
+  		        <label for="beep-option">Beep</label><select id="beep-option"><option value="0">On</option><option value="1">Off</option></select>
+  		      </li>
+  		      <!--<li id="language">
+  		        <label for="language-option">Language</label><select id="language-option"><option>English</option><option>System Default</option></select>
+  		      </li>-->
+  		      <li id="delay">
+  		        <label for="delay-option">Delay</label><input id="delay-option" type="number" step="1" min="0" max="20" pattern="\d*" required>
+  		      </li>
+    			  <li id="match-to">
+    			    <label for="pts-option">Match to</label><select id="pts-option"><option>1</option><option>3</option><option>5</option><option>7</option><option>9</option><option>11</option><option>13</option><option>15</option><option>17</option><option>19</option><option>21</option><option>23</option><option>25</option></select>
+  			    </li>
+  		      <li id="minutes-per-point">
+  		        <label for="minutes-option">Minutes/Point</label><input id="minutes-option" type="number" step="0.25" min="0.25" max="6" pattern="^\d+(?:\.\d{1,2})?$" required>
+  		      </li>
+    			  <li id="first-turn">
+    			    <label for="turn-option">First Player</label><select id="turn-option"><option value="0">Left</option><option value="1">Right</option></select>
+  			    </li>
+  			    <li id="reset">
+  			      <span>Reset Clock</span>
+  		      </li>
+  			    <li id="undo" class="disabled">
+  			      <span>Undo</span>
+  		      </li>
+		      </ul>
+  			</div>
+  			<div id="logs-section">
+  			  <!--<h1>Logs</h1>
+  			  <ol></ol>-->
+    			<div id="advertising">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- BGClockApp -->
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:250px;height:250px"
+                 data-ad-client="ca-pub-7609280451151357"
+                 data-ad-slot="4342002679"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+    			</div>
+  			</div>
+			</div>
+			<div id="notes"><span>Rotate your device to landscape orientation to get started.</span></div>
+			<!--<div id="advertising"></div>-->
+			<div id="done-btn">
+			  <span>Done</span>
+		  </div>
+		</div>
+	</div>
+</div>
+
+
+<script src="./scripts/app.js"></script>

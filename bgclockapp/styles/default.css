@@ -1,0 +1,79 @@
+* {-webkit-tap-highlight-color:rgba(0,0,0,0); -webkit-touch-callout:none;}
+*:not(input), *:focus:not(input) {-webkit-user-select:none;}
+html {touch-action:manipulation; pointer-events:none;}
+html, body {overflow:hidden; width:100%; height:100%; margin:0; padding:0; font-size:100%; font-family:-apple-system,Roboto,'Droid Sans',sans-serif;}
+body {background-color:black;}
+/* Layout */
+/* entire container, keeps perspective */
+.container {perspective:1280px; width:98%; height:96%; position:absolute; top:2%; left:1%;}
+/* flip the pane when hovered */
+.container.hover .wrapper {transform:rotateX(180deg);}
+.board-pane, .settings-pane {width:100%; height:100%;}
+/* flip speed goes here */
+.wrapper {transition-duration:0.8s; transform-style:preserve-3d; position:absolute; width:100%; height:100%; transform-origin:100% 50%; /* half of height */}
+/* hide back of pane during swap */
+.board-pane, .settings-pane {backface-visibility:hidden; -webkit-backface-visibility:hidden; position:absolute; top:0; left:0;}
+/* front pane, placed above back */
+.board-pane {z-index:2; display:flex; background-color:#212121; border-radius:10px;}
+/* back, initially hidden pane */
+.settings-pane {z-index:1; transform:rotateX(-180deg); background-color:#212121; color:#DEDEDE; border-radius:10px;}
+
+/* Board-Pane */
+.time-board {width:40%; position:relative; font-size:8vw; text-align:center; pointer-events:auto;}
+.board-pane .disabled {opacity:.3;}
+.time-board > span {width:100%; position:absolute; top:50%; left:0; transform: translateY(-50%);}
+
+/* css - How do I animate a glowing effect on text? - Stack Overflow https://stackoverflow.com/questions/7061420/how-do-i-animate-a-glowing-effect-on-text/7061505#7061505 */
+.grow {animation: glow .2.5s 1;}
+
+.controls-board {width:20%; position:relative;;}
+#start-btn {width:100%; position:absolute; top:0; color:gray; font-size:2.5vw; text-align:center; padding:5vh 0; overflow:hidden; pointer-events:auto;}
+#delay-time {height:100%; text-align:center; font-size:7.5vw; color:#DEDEDE;}
+#delay-time > span {width:100%; position:absolute; top:50%; left:0; transform: translateY(-50%);}
+#settings-btn {width:100%; position:absolute; bottom:0; color:gray; font-size:2.5vw; text-align:center; padding:5vh 0; overflow:hidden; pointer-events:auto;}
+
+/* Settings Pane */
+.settings-pane > #settings-wrapper {display:flex; height:100%; overflow:hidden;}
+#settings-section {width:47%;}
+#logs-section {width:53%;}
+.settings-pane > #settings-wrapper > div > h1 {font-size:2.5vw; color:gray; margin:2vh 2vw 1vh; font-weight:normal;}
+
+input, select {background-color:transparent; color:#DEDEDE; border:none; padding:0; margin:0; -webkit-appearance:none; appearance:none; font-size:3vw; pointer-events:auto;}
+select option {text-transform:capitalize;}
+select:focus, input:focus {outline:0;}
+input {width:auto; padding-right:1vw;}
+
+#settings-section > ul {list-style:none; margin:0 0 0 3vw; padding:0; overflow:hidden;}
+#settings-section > ul > li {font-size:3vw; margin-bottom:1.5vh; overflow:hidden; pointer-events:auto;}
+#settings-section > ul > li > label {margin-right:1vw; opacity:.75;}
+#settings-section > ul > li > label:after {content:':';}
+#settings-section > ul > li#reset {float:left; margin-right:2vw;}
+#settings-section > ul > li#undo span {background:#DEDEDE; color:#212121; border-radius:3vw; padding:0 2vw;}
+#settings-section > ul > li.disabled {opacity:.3;}
+
+#logs-section > ol {list-style:none; height:65%; width:85%; display:flex; flex-direction:column; flex-wrap:wrap; overflow-x:scroll; -webkit-overflow-scrolling:touch; margin:0; padding:0; pointer-events:auto; touch-action:pan-x; counter-reset:item; margin-left:4vw;}
+#logs-section > ol > li {font-size:3vw; margin:0 2vw 1vh 0; pointer-events:auto; overflow:hidden;}
+#logs-section > ol > li:before {content:counter(item) ".";counter-increment: item; color:gray; margin-right:0.5vw;}
+
+#advertising {width:100%; height:50px; position:absolute; left:0; bottom:12.5vh; text-align:center; pointer-events:auto;}
+
+#done-btn {width:20%; position:absolute; left:40%; bottom:0; color:gray; font-size:2.5vw; text-align:center; padding:5vh 0; overflow:hidden; pointer-events:auto;}
+
+@media (orientation: portrait) {
+.container {width:96%; height:98%; top:1%; left:2%;}
+.settings-pane > #settings-wrapper {display:block; height:auto;}
+#settings-section {width:100%;}
+#logs-section {width:100%;}
+.settings-pane > #settings-wrapper > div > h1 {font-size:3vh; margin:1vh 2vw 1vh;}
+input, select {font-size:3.75vh;}
+#settings-section > ul {margin:0 0 0 5vw;}
+#settings-section > ul > li {font-size:3.75vh; margin-bottom:0.75vh;}
+
+#logs-section > ol {height:45vh; width:90%; margin-left:5vw;}
+#logs-section > ol > li {font-size:4vh; margin-bottom:0;}
+#logs-section > ol > li:before {margin-right:0vw;}
+
+#advertising {width:100%; bottom:1vh;}
+
+#done-btn {display:none;}
+}
