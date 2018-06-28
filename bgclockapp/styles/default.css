@@ -63,21 +63,23 @@ input {width:auto; padding-right:1vw;}
 #done-btn {width:20%; position:absolute; left:40%; bottom:0; color:gray; font-size:2.5vw; text-align:center; padding:5vh 0; overflow:hidden; pointer-events:auto;}
 
 @media (orientation: portrait) {
-.container {width:96%; height:98%; top:1%; left:2%;}
-.settings-pane > #settings-wrapper {display:block; height:auto;}
-#settings-section {width:100%;}
-#logs-section {width:100%;}
-.settings-pane > #settings-wrapper > div > h1 {font-size:3vh; margin:1vh 2vw 1vh;}
-input, select {font-size:3.75vh;}
-#settings-section > ul {margin:0 0 0 5vw;}
-#settings-section > ul > li {font-size:3.75vh; margin-bottom:0.75vh;}
-
-#logs-section > ol {height:45vh; width:90%; margin-left:5vw;}
-#logs-section > ol > li {font-size:4vh; margin-bottom:0;}
-#logs-section > ol > li:before {margin-right:0vw;}
-
-#advertising {display:block;width:100%; height:50px; position:absolute; left:0; bottom:1vh; text-align:center; pointer-events:auto;}
-#advertising-1 {display:none;}
-
-#done-btn {display:none;}
+  .container {width:96%; height:98%; top:1%; left:2%;}
+  .settings-pane > #settings-wrapper {display:block; height:auto;}
+  #settings-section {width:100%;}
+  #logs-section {width:100%;}
+  .settings-pane > #settings-wrapper > div > h1 {font-size:3vh; margin:1vh 2vw 1vh;}
+  input, select {font-size:3.75vh;}
+  #settings-section > ul {margin:0 0 0 5vw;}
+  #settings-section > ul > li {font-size:3.75vh; margin-bottom:0.75vh;}
+  
+  #logs-section > ol {height:45vh; width:90%; margin-left:5vw;}
+  #logs-section > ol > li {font-size:4vh; margin-bottom:0;}
+  #logs-section > ol > li:before {margin-right:0vw;}
+  
+  #notes {display:block; width:100%; position:absolute; left:0; bottom:12.5vh; text-align:center; font-size:3vw; color:gray;}
+  
+  #advertising {display:block;width:100%; height:50px; position:absolute; left:0; bottom:1vh; text-align:center; pointer-events:auto;}
+  #advertising-1 {display:none;}
+  
+  #done-btn {display:none;}
 }
