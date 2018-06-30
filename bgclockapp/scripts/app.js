@@ -232,7 +232,7 @@ dbPromise.then(function(db) {
       apps.isDelayPaused = true;
     }
     if(apps.isPaused === false) {
-      settings.allottedTime[settings.turnNow] = apps.remainingTime;
+      settings.allottedTime[settings.turnNow] = apps.remainingTime > 0 ? apps.remainingTime : settings.allottedTime[settings.turnNow];
       updateSettingsOS.call(this);
       clearInterval(apps.countIntval);
       apps.isPaused = true;
@@ -267,7 +267,6 @@ dbPromise.then(function(db) {
         apps.remainingTime = 0;
         stopTimer.call(this);
         updateStartBtn.call(this);
-
         let i = 1
         ,   x = setInterval(function() {
         	beep.call(this);
@@ -276,7 +275,6 @@ dbPromise.then(function(db) {
         		clearInterval(x);
         	}
         }, 250);
-
         clearInterval(apps.countIntval);
       }
       apps.timeBoardNodes[settings.turnNow].children[0].textContent = updateTimerCount.call(this, apps.remainingTime);
@@ -505,7 +503,6 @@ dbPromise.then(function(db) {
         beep.call(this);
         apps.timeBoardNodes[settings.turnNow].style.WebkitAnimation = 'glow .2s';
         stopTimer.call(this);
-        settings.allottedTime[settings.turnNow] = apps.remainingTime > 0 ? apps.remainingTime : settings.allottedTime[settings.turnNow];
         addLogs.call(this).then(function(){
           settings.turnCount = settings.firstPlayer === settings.turnNow ? settings.turnCount: settings.turnCount + 1 ;
           settings.turnNow = settings.turnNow === 0 ? 1 : 0;
@@ -552,7 +549,7 @@ dbPromise.then(function(db) {
 
   /*****************************************************************************
    *
-   * Methods to Abandon app: refer to;
+   * Methods to close app: refer to;
    * http://kimagureneet.hatenablog.com/entry/2016/10/23/003645
    * https://qiita.com/ta__ho/items/937257c3c9891bdf2d38
    *
