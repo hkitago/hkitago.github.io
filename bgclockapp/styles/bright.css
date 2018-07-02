@@ -4,6 +4,7 @@ input, select {color:#212121;}
 .time-board {color:#212121;}
 .board-pane {background-color:#DEDEDE;color:#212121;}
 #delay-time {color:#212121;}
+.path {stroke:#212121;}
 @keyframes glow {
   to { text-shadow:#212121 1px 1px 10px, #212121 -1px 1px 10px, #212121 1px -1px 10px, #212121 -1px -1px 10px;}
 }

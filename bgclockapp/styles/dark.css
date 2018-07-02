@@ -4,6 +4,7 @@ input, select {color:#DEDEDE;}
 .time-board {color:#DEDEDE;}
 .board-pane {background-color:#212121;}
 #delay-time {color:#DEDEDE;}
+.path {stroke:#DEDEDE;}
 @keyframes glow {
   to { text-shadow:#DEDEDE 1px 1px 10px, #DEDEDE -1px 1px 10px, #DEDEDE 1px -1px 10px, #DEDEDE -1px -1px 10px;}
 }
