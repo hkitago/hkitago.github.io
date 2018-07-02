@@ -229,15 +229,16 @@ dbPromise.then(function(db) {
       
       apps.pathNodes[i].style.strokeDasharray = apps.stroke + 'px';
       apps.pathNodes[i].style.strokeDashoffset = (settings.animationDirection ? apps.stroke : 0) + 'px';
-      apps.pathNodes[i].style.animationDuration = '0.5s';
-      apps.pathNodes[i].style.animationName = 'pre-' + i;
-      apps.pathNodes[i].style.animationPlayState = 'running';
+      apps.pathNodes[i].style.webkitAnimationDuration = '0.5s';
+      apps.pathNodes[i].style.webkitAnimationName = 'pre-' + i;
       
       apps.pathNodes[i].addEventListener('animationend', function(){
+        apps.pathNodes[i].style.webkitAnimationPlayState = 'paused';
         this.style.strokeDashoffset = (settings.animationDirection ? stroke : 0) + 'px';
         this.style.animationDuration = settings.allottedTime[i] + 's';
-        this.style.animationPlayState = 'paused';
-        this.style.animationName = 'dash-' + i;
+        if(window.chrome) {
+          apps.pathNodes[i].style.webkitAnimationName = 'dash-' + i;
+        }
       }, {passive:false});
     }
   };
@@ -275,7 +276,7 @@ dbPromise.then(function(db) {
     if(apps.isPaused === false) {
       clearInterval(apps.countIntval);
       apps.isPaused = true;
-      apps.pathNodes[settings.turnNow].style.animationPlayState = 'paused';
+      apps.pathNodes[settings.turnNow].style.webkitAnimationPlayState = 'paused';
       settings.allottedTime[settings.turnNow] = apps.remainingTime > 0 ? apps.remainingTime : settings.allottedTime[settings.turnNow];
       updateSettingsOS.call(this);
     }
@@ -302,7 +303,8 @@ dbPromise.then(function(db) {
   };
   
   const countDownTimer = function(){
-    apps.pathNodes[settings.turnNow].style.animationPlayState = 'running';
+    apps.pathNodes[settings.turnNow].style.webkitAnimationName = 'dash-' + settings.turnNow;
+    apps.pathNodes[settings.turnNow].style.webkitAnimationPlayState = 'running';
     apps.resumeTime = performance.now();
     apps.isDelayPaused = true;
     apps.isPaused = false;
@@ -553,7 +555,6 @@ dbPromise.then(function(db) {
           settings.turnNow = settings.turnNow === 0 ? 1 : 0;
           updateSettingsOS.call(this);
           resumeTimer.call(this);
-          apps.timeBoardNodes[settings.turnNow].style.WebkitAnimation = '';
         });
       }
     }, {passive:false});
