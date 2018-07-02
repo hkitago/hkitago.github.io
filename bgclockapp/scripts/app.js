@@ -78,6 +78,7 @@
         if(val !== undefined) {
           settings = val;
         }
+        settings.animationDirection = false;
         if(settings.allottedTime[0] === 0 && settings.allottedTime[1] === 0) {
           settings.allottedTime[0] = settings.allottedTime[1] = updateAllottedTime.call(this);
         }
