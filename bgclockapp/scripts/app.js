@@ -235,6 +235,7 @@ dbPromise.then(function(db) {
       
       apps.pathNodes[i].addEventListener('animationend', function(){
         this.style.strokeDashoffset = (settings.animationDirection ? stroke : 0) + 'px';
+        this.style.animationDuration = settings.allottedTime[i] + 's';
       }, {passive:false});
     }
   };
@@ -270,11 +271,6 @@ dbPromise.then(function(db) {
       apps.isDelayPaused = true;
     }
     if(apps.isPaused === false) {
-<<<<<<< HEAD
-=======
-      settings.allottedTime[settings.turnNow] = apps.remainingTime;
-      updateSettingsOS.call(this);
->>>>>>> parent of dccdaf0... modified to set remaining time cal.
       clearInterval(apps.countIntval);
       apps.isPaused = true;
       apps.pathNodes[settings.turnNow].style.animationPlayState = 'paused';
@@ -304,7 +300,6 @@ dbPromise.then(function(db) {
   };
   
   const countDownTimer = function(){
-    apps.pathNodes[settings.turnNow].style.animationDuration = settings.allottedTime[settings.turnNow] + 's';
     apps.pathNodes[settings.turnNow].style.animationPlayState = 'running';
     apps.pathNodes[settings.turnNow].style.animationName = 'dash-' + settings.turnNow;
     apps.resumeTime = performance.now();
@@ -317,7 +312,6 @@ dbPromise.then(function(db) {
         apps.remainingTime = 0;
         stopTimer.call(this);
         updateStartBtn.call(this);
-
         let i = 1
         ,   x = setInterval(function() {
         	beep.call(this);
@@ -326,11 +320,6 @@ dbPromise.then(function(db) {
         		clearInterval(x);
         	}
         }, 250);
-<<<<<<< HEAD
-=======
-
-        clearInterval(apps.countIntval);
->>>>>>> parent of dccdaf0... modified to set remaining time cal.
       }
       apps.timeBoardNodes[settings.turnNow].children[0].textContent = updateTimerCount.call(this, apps.remainingTime);
     }, 50);
@@ -558,7 +547,6 @@ dbPromise.then(function(db) {
         this.children[0].classList.add('hover');
         beep.call(this);
         stopTimer.call(this);
-        settings.allottedTime[settings.turnNow] = apps.remainingTime > 0 ? apps.remainingTime : settings.allottedTime[settings.turnNow];
         addLogs.call(this).then(function(){
           settings.turnCount = settings.firstPlayer === settings.turnNow ? settings.turnCount: settings.turnCount + 1 ;
           settings.turnNow = settings.turnNow === 0 ? 1 : 0;
@@ -604,7 +592,7 @@ dbPromise.then(function(db) {
 
   /*****************************************************************************
    *
-   * Methods to Abandon app: refer to;
+   * Methods to close app: refer to;
    * http://kimagureneet.hatenablog.com/entry/2016/10/23/003645
    * https://qiita.com/ta__ho/items/937257c3c9891bdf2d38
    *
