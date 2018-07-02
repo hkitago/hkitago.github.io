@@ -236,6 +236,7 @@ dbPromise.then(function(db) {
       apps.pathNodes[i].addEventListener('animationend', function(){
         this.style.strokeDashoffset = (settings.animationDirection ? stroke : 0) + 'px';
         this.style.animationDuration = settings.allottedTime[i] + 's';
+        this.style.animationPlayState = 'paused';
       }, {passive:false});
     }
   };
@@ -300,8 +301,8 @@ dbPromise.then(function(db) {
   };
   
   const countDownTimer = function(){
-    apps.pathNodes[settings.turnNow].style.animationPlayState = 'running';
     apps.pathNodes[settings.turnNow].style.animationName = 'dash-' + settings.turnNow;
+    apps.pathNodes[settings.turnNow].style.animationPlayState = 'running';
     apps.resumeTime = performance.now();
     apps.isDelayPaused = true;
     apps.isPaused = false;
