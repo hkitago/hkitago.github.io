@@ -22,6 +22,10 @@ body {background-color:black;}
 .time-board {width:40%; position:relative; font-size:8vw; text-align:center; pointer-events:auto;}
 .board-pane .disabled {opacity:.3;}
 .time-board > span {width:100%; position:absolute; top:50%; left:0; transform: translateY(-50%);}
+.time-board > span.hover {animation-timing-function:linear; animation-duration:.2s; animation-name:glow;}
+
+svg {position:absolute; top:0; left:0; width:100%; height:100%;}
+.path {stroke:#DEDEDE; animation-timing-function:linear; animation-fill-mode:forwards; transform-origin:center; transform:rotate(-90deg);}
 
 .controls-board {width:20%; position:relative;;}
 #start-btn {width:100%; position:absolute; top:0; color:gray; font-size:2.5vw; text-align:center; padding:5vh 0; overflow:hidden; pointer-events:auto;}

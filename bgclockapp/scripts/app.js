@@ -14,7 +14,7 @@
     turnCount: 0,
     firstPlayer: 0,
     turnNow: 0,
-    animationDirection: true, // clock-wise
+    animationDirection: false, // anti-clockwise & decrease
     created: Date.now()
   };
   let apps = {
@@ -27,7 +27,21 @@
     remainingTime: 0,
     countIntval: 0,
     timeBoardNodes: document.querySelectorAll('.time-board'),
-    delayBoardNode: document.getElementById('delay-time')
+    delayBoardNode: document.getElementById('delay-time'),
+    pathNodes: document.querySelectorAll('.path'),
+    get rect(){
+      return this.pathNodes[settings.turnNow].getBoundingClientRect();
+    },
+    get stroke(){
+      return Math.PI * this.rect.height;
+    },
+    get isStarted(){
+      return  (   settings.allottedTime[0] === updateAllottedTime.call(this)
+              &&  settings.allottedTime[1] === updateAllottedTime.call(this)
+              &&  settings.turnCount === 0
+              &&  settings.firstPlayer === settings.turnNow) ? true : false;
+    },
+    styleNode: document.createElement('style')
   };
   let undoLogs = [];
 /*
@@ -71,6 +85,7 @@
         // Initialize Board Pane
         updateStartBtn.call(this);
         updateClockBoardPane.call(this);
+
         // Initialize Settings Pane
         document.getElementById('appearance-style').setAttribute('href', 'styles/' + settings.appearance.toLowerCase() + '.css');
         document.getElementById('appearance-option').value = settings.appearance;
@@ -103,9 +118,10 @@ dbPromise.then(function(db) {
   document.getElementById('settings-btn').addEventListener('click', function() {
     stopTimer.call(this);
     updateStartBtn.call(this);
-    //addLogs.call(this);
-    updateResetBtn.call(this);
-    document.querySelector('.container').classList.add('hover');
+    addLogs.call(this).then(function(){
+      updateResetBtn.call(this);
+      document.querySelector('.container').classList.add('hover');
+    });
   }, {passive:false});
   
   document.getElementById('done-btn').addEventListener('click', function() {
@@ -181,40 +197,61 @@ dbPromise.then(function(db) {
     resetClock.call(this);
   }, {passive:false});
 
-
-  /*****************************************************************************
-   *
-   * Methods to handle data
-   *
-   ****************************************************************************/
-
-  const isStarted = function(){
-    return  (   settings.allottedTime[0] === updateAllottedTime.call(this)
-            &&  settings.allottedTime[1] === updateAllottedTime.call(this)
-            &&  settings.turnCount === 0
-            &&  settings.firstPlayer === settings.turnNow) ? true : false;
-  };
-  
-
-
   /*****************************************************************************
    *
    * Methods to update on Board Pane UI
    *
    ****************************************************************************/
 
+  const setGlowAnimation = function(){
+    for(let i = 0, max = apps.timeBoardNodes.length; i < max; i = i + 1) {
+      apps.timeBoardNodes[i].children[0].addEventListener('animationend', function(){
+        this.classList.remove('hover');
+      }, {passive:false});
+    }
+  }.call(this);
+
+  const setCircleAnimation = function(){
+    const styleNodes = document.getElementsByTagName('style');
+    if(styleNodes.length > 0){
+      styleNodes[0].textContent = '';
+    }
+    for(let i = 0, max = apps.pathNodes.length; i < max; i = i + 1){
+      apps.pathNodes[i].removeAttribute('style');
+      const stroke = updateAllottedTime.call(this) !== settings.allottedTime[i] ? apps.stroke * settings.allottedTime[i] / updateAllottedTime.call(this) : apps.stroke;
+      const cssText = '@keyframes pre-' + i + ' {from { stroke-dashoffset: ' + apps.stroke + '; } to { stroke-dashoffset: ' + (settings.animationDirection ? stroke : apps.stroke - stroke) + '; }}'
+                    + "\n"
+                    + '@keyframes dash-' + i + ' {from { stroke-dashoffset: ' + (settings.animationDirection ? stroke : apps.stroke - stroke) + '; } to { stroke-dashoffset: ' + (settings.animationDirection ? 0 : apps.stroke) + '; }}';
+      const textNode = document.createTextNode(cssText);
+      apps.styleNode.appendChild(textNode);
+      document.getElementsByTagName('head')[0].appendChild(apps.styleNode);
+      
+      apps.pathNodes[i].style.strokeDasharray = apps.stroke + 'px';
+      apps.pathNodes[i].style.strokeDashoffset = (settings.animationDirection ? apps.stroke : 0) + 'px';
+      apps.pathNodes[i].style.animationDuration = '0.5s';
+      apps.pathNodes[i].style.animationName = 'pre-' + i;
+      apps.pathNodes[i].style.animationPlayState = 'running';
+      
+      apps.pathNodes[i].addEventListener('animationend', function(){
+        this.style.strokeDashoffset = (settings.animationDirection ? stroke : 0) + 'px';
+      }, {passive:false});
+    }
+  };
+
   const updateClockBoardPane = function(){
     resetStyleClockPane.call(this);
     apps.delayBoardNode.children[0].textContent = settings.delayTime;
+    apps.delayBoardNode.classList.remove('disabled');
     for(let i = 0, max = apps.timeBoardNodes.length; i < max; i = i + 1) {
       apps.timeBoardNodes[i].children[0].textContent = updateTimerCount.call(this, settings.allottedTime[i]);
     }
+    setCircleAnimation.call(this);
   };
   
   const updateStartBtn = function(){
     document.getElementById('start-btn').style.display = (settings.allottedTime[0] === 0 || settings.allottedTime[1] === 0) ? 'none' : 'block';
     if(apps.isDelayPaused && apps.isPaused) {
-      document.getElementById('start-btn').children[0].textContent = isStarted.call(this) ? 'Start' : 'Resume';
+      document.getElementById('start-btn').children[0].textContent = apps.isStarted ? 'Start' : 'Resume';
     } else {
       document.getElementById('start-btn').children[0].textContent = 'Stop';
     }
@@ -232,10 +269,11 @@ dbPromise.then(function(db) {
       apps.isDelayPaused = true;
     }
     if(apps.isPaused === false) {
-      settings.allottedTime[settings.turnNow] = apps.remainingTime > 0 ? apps.remainingTime : settings.allottedTime[settings.turnNow];
-      updateSettingsOS.call(this);
       clearInterval(apps.countIntval);
       apps.isPaused = true;
+      apps.pathNodes[settings.turnNow].style.animationPlayState = 'paused';
+      settings.allottedTime[settings.turnNow] = apps.remainingTime > 0 ? apps.remainingTime : settings.allottedTime[settings.turnNow];
+      updateSettingsOS.call(this);
     }
   };
   
@@ -243,12 +281,14 @@ dbPromise.then(function(db) {
     resetStyleClockPane.call(this);
     apps.startDelayTime = performance.now();
     apps.isDelayPaused = false;
+    apps.delayBoardNode.classList.remove('disabled');
     return new Promise(function(resolve, reject){
       apps.delayIntval = setInterval(function(){
         apps.remainingDelayTime = settings.delayTime - (performance.now() - apps.startDelayTime) / 1000 + 1;
         if (apps.remainingDelayTime <= 1){
-          apps.remainingDelayTime = 0;
           clearInterval(apps.delayIntval);
+          apps.remainingDelayTime = 0;
+          apps.delayBoardNode.classList.add('disabled');
           resolve.call(this);
         }
         //apps.delayBoardNode.children[0].textContent = parseFloat(apps.remainingDelayTime).toFixed(0);
@@ -258,12 +298,16 @@ dbPromise.then(function(db) {
   };
   
   const countDownTimer = function(){
+    apps.pathNodes[settings.turnNow].style.animationDuration = settings.allottedTime[settings.turnNow] + 's';
+    apps.pathNodes[settings.turnNow].style.animationPlayState = 'running';
+    apps.pathNodes[settings.turnNow].style.animationName = 'dash-' + settings.turnNow;
     apps.resumeTime = performance.now();
     apps.isDelayPaused = true;
     apps.isPaused = false;
     apps.countIntval = setInterval(function(){
       apps.remainingTime = settings.allottedTime[settings.turnNow] - (performance.now() - apps.resumeTime) / 1000
       if (apps.remainingTime <= 0){
+        clearInterval(apps.countIntval);
         apps.remainingTime = 0;
         stopTimer.call(this);
         updateStartBtn.call(this);
@@ -275,7 +319,6 @@ dbPromise.then(function(db) {
         		clearInterval(x);
         	}
         }, 250);
-        clearInterval(apps.countIntval);
       }
       apps.timeBoardNodes[settings.turnNow].children[0].textContent = updateTimerCount.call(this, apps.remainingTime);
     }, 50);
@@ -314,7 +357,7 @@ dbPromise.then(function(db) {
   };
 
   const updateResetBtn = function(){
-    if(isStarted.call(this)) {
+    if(apps.isStarted) {
       document.getElementById('reset').removeEventListener('click', getUndoData, {passive:false});
       document.getElementById('reset').classList.add('disabled');
     } else {
@@ -500,8 +543,8 @@ dbPromise.then(function(db) {
   for(let i = 0, max = apps.timeBoardNodes.length; i < max; i = i + 1) {
     apps.timeBoardNodes[i].addEventListener('click', function() {
       if(Number(this.id) === settings.turnNow && (apps.isDelayPaused === false || apps.isPaused === false)) {
+        this.children[0].classList.add('hover');
         beep.call(this);
-        apps.timeBoardNodes[settings.turnNow].style.WebkitAnimation = 'glow .2s';
         stopTimer.call(this);
         addLogs.call(this).then(function(){
           settings.turnCount = settings.firstPlayer === settings.turnNow ? settings.turnCount: settings.turnCount + 1 ;
@@ -527,7 +570,7 @@ dbPromise.then(function(db) {
       return false;
     }
   	const volume = 0.1
-  	,   duration = 100
+  	,   duration = 200
   	,   type =  'square'
   	,   frequency = settings.turnNow === 0 ? 2000 : 1000;
   	const oscillator = audioCtx.createOscillator();
@@ -541,10 +584,9 @@ dbPromise.then(function(db) {
   	oscillator.type = type;
   
   	oscillator.start();
-  	setTimeout(
-  		function() {
-  			oscillator.stop();
-  		}, duration);
+  	setTimeout(function() {
+  		oscillator.stop();
+		}, duration);
   };
 
   /*****************************************************************************
@@ -589,6 +631,8 @@ dbPromise.then(function(db) {
   // Add a media query change listener
   mql.addListener(function(m) {
     if(m.matches) {
+      stopTimer.call(this);
+      updateStartBtn.call(this);
       document.querySelector('.container').classList.add('hover');
     } else {
       updateClockBoardPane.call(this);
