@@ -277,7 +277,7 @@ dbPromise.then(function(db) {
       clearInterval(apps.countIntval);
       apps.isPaused = true;
       apps.pathNodes[settings.turnNow].style.webkitAnimationPlayState = 'paused';
-      settings.allottedTime[settings.turnNow] = apps.remainingTime > 0 ? apps.remainingTime : settings.allottedTime[settings.turnNow];
+      settings.allottedTime[settings.turnNow] = apps.remainingTime;
       updateSettingsOS.call(this);
     }
   };
