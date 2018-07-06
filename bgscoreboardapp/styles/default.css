@@ -24,7 +24,7 @@ body {background-color:black;}
 .money {color:transparent; text-shadow:0 0 0 #DEDEDE; font-size:8vw;}
 #crowford-info {width:100%; position:absolute; top:50%; color:gray; font-size:2vw; text-align:center; overflow:hidden;}
 #crowford-info.disabled {visibility:hidden;}
-#settings {width:92%; height:10%; position:absolute; left:4%; bottom:0.1vh; color:gray; font-size:2.5vw; line-height:6vh; text-align:center; overflow:hidden; pointer-events:auto;}
+#settings {width:92%; position:absolute; left:4%; bottom:0; color:gray; font-size:2.5vw; padding:5vh 0; text-align:center; overflow:hidden; pointer-events:auto;}
 
 /* entire container, keeps perspective */
 .flip-container {perspective:1280px; width:100%; height:100%; position:absolute; top:0; left:0; pointer-events:auto;}
@@ -72,7 +72,7 @@ select:focus {outline:0;}
 
 #advertising {width:100%; height:50px; position:absolute; left:0; bottom:10vh; text-align:center; pointer-events:auto;}
 
-#done-btn {width:20%; height:9%; position:absolute; left:40%; bottom:0.1vh; color:gray; font-size:2.5vw; line-height:6vh; text-align:center; overflow:hidden; pointer-events:auto;}
+#done-btn {width:20%;position:absolute; left:40%; bottom:0; color:gray; font-size:2.5vw; padding:5vh 0; text-align:center; overflow:hidden; pointer-events:auto;}
 
 @media (orientation: portrait) {
   .container {width:96%; height:98%; top:1%; left:2%;}

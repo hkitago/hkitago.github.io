@@ -1,9 +1,10 @@
 var dataCacheName = 'bgScoreBoardAppData-v1';
-var cacheName = 'bgScoreBoardApp-1';
+var cacheName = 'bgScoreBoardApp-2';
 var filesToCache = [
   './',
   './index.html',
   './scripts/app.js',
+  './scripts/localization.js',
   './lib/idb.js',
   './styles/default.css',
   './styles/dark.css',

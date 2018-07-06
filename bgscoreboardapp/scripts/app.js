@@ -1,6 +1,6 @@
+'use strict';
 
 (function() {
-  'use strict';
   let dbPromise;
   let settings = {
     appearance: 'Dark',
@@ -50,6 +50,7 @@
         setMaxMatch.call(this);
         // Initialize Scoreboard Pane
         updateFontFamily.call(this);
+        localizeStrings.call(this);
         updateMatchInfoPane.call(this);
         updateCrawfordInfoPane.call(this);
         updateResetBtn.call(this);
@@ -58,6 +59,7 @@
         document.getElementById('appearance-style').setAttribute('href', 'styles/' + settings.appearance.toLowerCase() + '.css');
         document.getElementById('appearance-option').value = settings.appearance;
         document.getElementById('font-option').value = settings.font;
+        document.getElementById('language-option').value = settings.language;
         document.getElementById('game-option').value = settings.gameFor;
         document.getElementById('pts-option').value = settings.matchTo;
 
@@ -107,6 +109,12 @@
     settings.font = this.value;
     updateSettingsOS.call(this);
     updateFontFamily.call(this);
+  });
+
+  document.getElementById('language-option').addEventListener('change', function() {
+    settings.language = this.value;
+    updateSettingsOS.call(this);
+    localizeStrings.call(this);
   });
 
   document.getElementById('game-option').addEventListener('change', function() {
@@ -469,6 +477,32 @@
     }
   });
 
+  /*****************************************************************************
+   *
+   * Localization
+   *
+   ****************************************************************************/
+
+  const localizeStrings = function(){
+    import('./localization.js')
+      .then(() => {
+        const lang = settings.language === 'English' ? 'en' : localization.lang;
+        if(localization.labelStrings[lang]) {
+          document.getElementById('settings').children[0].textContent = localization.labelStrings[lang].settings;
+          document.getElementById('settings-section').children[0].textContent = localization.labelStrings[lang].settings;
+          document.getElementById('appearance').children[0].textContent = localization.labelStrings[lang].appearance;
+          document.getElementById('font').children[0].textContent = localization.labelStrings[lang].font;
+          document.getElementById('language').children[0].textContent = localization.labelStrings[lang].language;
+          document.getElementById('game').children[0].textContent = localization.labelStrings[lang].game;
+          document.getElementById('match-to').children[0].textContent = localization.labelStrings[lang].match;
+          document.getElementById('reset').children[0].textContent = localization.labelStrings[lang].reset;
+          document.getElementById('undo').children[0].textContent = localization.labelStrings[lang].undo;
+          document.getElementById('scoresheet-section').children[0].textContent = localization.labelStrings[lang].scoresheet;
+          document.getElementById('done-btn').children[0].textContent = localization.labelStrings[lang].done;
+          document.getElementById('notes').children[0].textContent = localization.labelStrings[lang].notes;
+        }
+      });
+  };
 
   // Add feature check for Service Workers here
   if('serviceWorker' in navigator) {
