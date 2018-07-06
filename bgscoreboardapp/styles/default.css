@@ -70,7 +70,7 @@ select:focus {outline:0;}
 
 #notes {display:none;}
 
-#advertising {width:100%; height:50px; position:absolute; left:0; bottom:10vh; text-align:center; pointer-events:auto;}
+#advertising {width:100%; height:50px; position:absolute; left:0; bottom:10vh; text-align:right; pointer-events:auto;}
 
 #done-btn {width:20%;position:absolute; left:40%; bottom:0; color:gray; font-size:2.5vw; padding:5vh 0; text-align:center; overflow:hidden; pointer-events:auto;}
 
@@ -92,7 +92,7 @@ select:focus {outline:0;}
   
   #notes {display:block; width:100%; position:absolute; left:0; bottom:12.5vh; text-align:center; font-size:3vw; color:gray;}
   
-  #advertising {width:100%; bottom:1vh;}
+  #advertising {width:100%; bottom:1vh; text-align:center;}
   
   #done-btn {display:none;}
 }
