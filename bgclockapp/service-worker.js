@@ -1,9 +1,10 @@
 var dataCacheName = 'bgClockAppData-v1';
-var cacheName = 'bgClockApp-1';
+var cacheName = 'bgClockApp-2';
 var filesToCache = [
   './',
   './index.html',
   './scripts/app.js',
+  './scripts/localization.js',
   './lib/idb.js',
   './styles/default.css',
   './styles/dark.css',

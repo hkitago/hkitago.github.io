@@ -28,10 +28,10 @@ svg {position:absolute; top:0; left:0; width:100%; height:100%;}
 .path {stroke:#DEDEDE; animation-timing-function:linear; animation-fill-mode:forwards; transform-origin:center; transform:rotate(-90deg);}
 
 .controls-board {width:10%; position:relative;;}
-#start-btn {width:100%; position:absolute; top:0; color:gray; font-size:2.5vw; text-align:center; padding:5vh 0; overflow:hidden; pointer-events:auto;}
+#start-btn {width:100%; position:absolute; top:0; color:gray; font-size:2.5vw; text-align:center; padding:5vh 0; pointer-events:auto;}
 #delay-time {height:100%; text-align:center; font-size:7.5vw; color:#DEDEDE;}
 #delay-time > span {width:100%; position:absolute; top:50%; left:0; transform: translateY(-50%);}
-#settings-btn {width:100%; position:absolute; bottom:0; color:gray; font-size:2.5vw; text-align:center; padding:5vh 0; overflow:hidden; pointer-events:auto;}
+#settings-btn {width:100%; position:absolute; bottom:0; color:gray; font-size:2.5vw; text-align:center; padding:5vh 0; pointer-events:auto;}
 
 /* Settings Pane */
 .settings-pane > #settings-wrapper {display:flex; height:100%; overflow:hidden;}
@@ -40,15 +40,17 @@ svg {position:absolute; top:0; left:0; width:100%; height:100%;}
 .settings-pane > #settings-wrapper > div > h1 {font-size:2.5vw; color:gray; margin:2vh 2vw 1vh; font-weight:normal;}
 
 input, select {background-color:transparent; color:#DEDEDE; border:none; padding:0; margin:0; -webkit-appearance:none; appearance:none; font-size:3vw; pointer-events:auto;}
-select option {text-transform:capitalize;}
+select option {text-transform:capitalize; line-height:1;}
 select:focus, input:focus {outline:0;}
-input {width:auto; padding-right:1vw;}
+input {width:2em; padding-right:1vw; line-height:1;}
 
 #settings-section > ul {list-style:none; margin:0 0 0 3vw; padding:0; overflow:hidden;}
-#settings-section > ul > li {font-size:3vw; margin-bottom:1.5vh; overflow:hidden; pointer-events:auto;}
+#settings-section > ul > li {font-size:3vw; margin-bottom:0.75vh; pointer-events:auto; line-height:1;}
+#first-turn {margin-bottom:4vh !important;}
 #settings-section > ul > li > label {margin-right:1vw; opacity:.75;}
 #settings-section > ul > li > label:after {content:':';}
 #settings-section > ul > li#reset {float:left; margin-right:2vw;}
+#settings-section > ul > li#undo {display:inline-block;}
 #settings-section > ul > li#undo span {background:#DEDEDE; color:#212121; border-radius:3vw; padding:0 2vw;}
 #settings-section > ul > li.disabled {opacity:.3;}
 

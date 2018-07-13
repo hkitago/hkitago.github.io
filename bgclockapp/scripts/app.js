@@ -41,7 +41,8 @@
               &&  settings.turnCount === 0
               &&  settings.firstPlayer === settings.turnNow) ? true : false;
     },
-    styleNode: document.createElement('style')
+    styleNode: document.createElement('style'),
+    startBtnLabels: { startLabel: 'Start', resumeLabel: 'Resume', stopLabel: 'Stop' }
   };
   let undoLogs = [];
 /*
@@ -83,6 +84,7 @@
           settings.allottedTime[0] = settings.allottedTime[1] = updateAllottedTime.call(this);
         }
         updateFontFamily.call(this);
+        localizeStrings.call(this);
         // Initialize Board Pane
         updateStartBtn.call(this);
         updateClockBoardPane.call(this);
@@ -91,6 +93,7 @@
         document.getElementById('appearance-style').setAttribute('href', 'styles/' + settings.appearance.toLowerCase() + '.css');
         document.getElementById('appearance-option').value = settings.appearance;
         document.getElementById('font-option').value = settings.font;
+        document.getElementById('language-option').value = settings.language;
         document.getElementById('beep-option').value = settings.beep;
         document.getElementById('delay-option').value = settings.delayTime;
         document.getElementById('pts-option').value = settings.matchTo;
@@ -150,6 +153,12 @@ dbPromise.then(function(db) {
     updateSettingsOS.call(this);
     updateFontFamily.call(this);
   }, {passive:false});
+
+  document.getElementById('language-option').addEventListener('change', function() {
+    settings.language = this.value;
+    updateSettingsOS.call(this);
+    localizeStrings.call(this);
+  });
 
   document.getElementById('beep-option').addEventListener('change', function() {
     settings.beep = Number(this.value);
@@ -256,12 +265,12 @@ dbPromise.then(function(db) {
   const updateStartBtn = function(){
     document.getElementById('start-btn').style.display = (settings.allottedTime[0] === 0 || settings.allottedTime[1] === 0) ? 'none' : 'block';
     if(apps.isDelayPaused && apps.isPaused) {
-      document.getElementById('start-btn').children[0].textContent = apps.isStarted ? 'Start' : 'Resume';
+      document.getElementById('start-btn').children[0].textContent = apps.isStarted ? apps.startBtnLabels.startLabel : apps.startBtnLabels.resumeLabel;
     } else {
-      document.getElementById('start-btn').children[0].textContent = 'Stop';
+      document.getElementById('start-btn').children[0].textContent = apps.startBtnLabels.stopLabel;
     }
   };
-  
+
   const resetStyleClockPane = function(){
     apps.timeBoardNodes[settings.turnNow].classList.remove('disabled');
     apps.timeBoardNodes[(settings.turnNow === 0 ? 1 : 0)].classList.add('disabled');
@@ -642,6 +651,55 @@ dbPromise.then(function(db) {
       document.querySelector('.container').classList.remove('hover');
     }
   });
+
+  /*****************************************************************************
+   *
+   * Localization
+   *
+   ****************************************************************************/
+
+  const localizeStrings = function(){
+    import('./localization.js')
+      .then(() => {
+        const lang = settings.language === 'English' ? 'en' : localization.lang;
+        if(localization.labelStrings[lang]) {
+          document.getElementById('settings-btn').children[0].textContent = localization.labelStrings[lang].settings;
+          document.getElementById('settings-section').children[0].textContent = localization.labelStrings[lang].settings;
+          document.getElementById('appearance').children[0].textContent = localization.labelStrings[lang].appearance;
+          document.getElementById('font').children[0].textContent = localization.labelStrings[lang].font;
+          document.getElementById('beep').children[0].textContent = localization.labelStrings[lang].beep;
+          document.getElementById('language').children[0].textContent = localization.labelStrings[lang].language;
+          document.getElementById('delay').children[0].textContent = localization.labelStrings[lang].delay;
+          document.getElementById('match-to').children[0].textContent = localization.labelStrings[lang].match;
+          document.getElementById('minutes-per-point').children[0].textContent = localization.labelStrings[lang].minutes;
+          document.getElementById('first-turn').children[0].textContent = localization.labelStrings[lang].first;
+          document.getElementById('reset').children[0].textContent = localization.labelStrings[lang].reset;
+          document.getElementById('undo').children[0].textContent = localization.labelStrings[lang].undo;
+          document.getElementById('done-btn').children[0].textContent = localization.labelStrings[lang].done;
+          document.getElementById('notes').children[0].textContent = localization.labelStrings[lang].notes;
+          apps.startBtnLabels.startLabel = localization.labelStrings[lang].startLabel;
+          apps.startBtnLabels.resumeLabel = localization.labelStrings[lang].resumeLabel;
+          apps.startBtnLabels.stopLabel = localization.labelStrings[lang].stopLabel;
+          updateStartBtn.call(this);
+        }
+      });
+  };
+
+  /*****************************************************************************
+   *
+   * PC Keyboard
+   *
+   ****************************************************************************/
+
+  document.addEventListener('keydown', function(e){
+    if (e.code === 'ShiftLeft'){
+      apps.timeBoardNodes[0].click();
+    } else if (e.code === 'ShiftRight'){
+      apps.timeBoardNodes[1].click();
+    } else if (e.code === 'Space' && (document.querySelector('.container').className).indexOf('hover') === -1){
+      document.getElementById('start-btn').click();
+    }
+  }, {passive:false});
 
   // Add feature check for Service Workers here
   if('serviceWorker' in navigator) {
