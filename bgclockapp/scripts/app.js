@@ -344,7 +344,9 @@ dbPromise.then(function(db) {
   };
   
   const updateTimerCount = function(time){
-    return time < 1 ? 0 : new Date(1000 * time).toISOString().substr(11, 8).replace(/^[0:]+/, '');
+    const l = time < 10 ? 10 : 8
+    const t = new Date(1000 * time).toISOString().substr(11, l).replace(/^[0:]+/, '');
+    return time < 1 ? '0' + t : t;
   };
 
   /*****************************************************************************
