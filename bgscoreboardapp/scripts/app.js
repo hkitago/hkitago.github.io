@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+(function(){
   let dbPromise;
   let settings = {
     appearance: 'Dark',
@@ -373,8 +373,8 @@
    *
    ****************************************************************************/
 
-  var flipNodes = document.querySelectorAll('.flip-container');
-  for(var i = 0, max = flipNodes.length; i < max; i++) {
+  const flipNodes = document.querySelectorAll('.flip-container');
+  for(let i = 0, max = flipNodes.length; i < max; i++) {
     flipNodes[i].addEventListener('click', function() {
       flipDown.call(this);
     }, {passive:false});
@@ -459,7 +459,7 @@
    ****************************************************************************/
 
   // Find matches
-  var mql = window.matchMedia("(orientation: portrait)");
+  const mql = window.matchMedia("(orientation: portrait)");
   
   // If there are matches, we're in portrait
   if(mql.matches) {
@@ -503,6 +503,24 @@
         }
       });
   };
+
+  /*****************************************************************************
+   *
+   * PC Keyboard
+   *
+   ****************************************************************************/
+
+  document.addEventListener('keydown', function(e){
+    if((document.querySelector('.container').className).indexOf('hover') !== -1){
+      return false;
+    }
+    const flipNodes = document.querySelectorAll('.flip-container');
+    if (e.code === 'ShiftLeft'){
+      flipNodes[0].click();
+    } else if (e.code === 'ShiftRight'){
+      flipNodes[1].click();
+    }
+  }, {passive:false});
 
   // Add feature check for Service Workers here
   if('serviceWorker' in navigator) {

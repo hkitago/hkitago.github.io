@@ -53,10 +53,11 @@ select option {text-transform:capitalize;}
 select:focus {outline:0;}
 
 #settings-section > ul {list-style:none; margin:0 0 0 3vw; padding:0; overflow:hidden;}
-#settings-section > ul > li {font-size:3vw; margin-bottom:1.5vh; overflow:hidden; pointer-events:auto;}
+#settings-section > ul > li {font-size:3vw; margin-bottom:1.5vh; pointer-events:auto;}
 #settings-section > ul > li > label {margin-right:1vw; opacity:.75;}
 #settings-section > ul > li > label:after {content:':';}
 #settings-section > ul > li#reset {float:left; margin-right:2vw;}
+#settings-section > ul > li#undo {display:inline-block;}
 #settings-section > ul > li#undo span {background:#DEDEDE; color:#212121; border-radius:3vw; padding:0 2vw;}
 #settings-section > ul > li.disabled {opacity:.3;}
 
