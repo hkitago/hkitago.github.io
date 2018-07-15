@@ -66,7 +66,7 @@ select:focus {outline:0;}
 .social span{margin:0 3vw 0 0;}
 
 #scoresheet-section > ol {list-style:none; height:58vh; width:45vw; display:flex; flex-direction:column; flex-wrap:wrap; overflow-x:scroll; -webkit-overflow-scrolling:touch; margin:0; padding:0; pointer-events:auto; touch-action:pan-x; counter-reset:item; margin-left:4vw;}
-#scoresheet-section > ol > li {font-size:3vw; margin:0 2vw 1vh 0; pointer-events:auto;  line-height:1;}
+#scoresheet-section > ol > li {font-size:3vw; margin:0 2vw 1vh 0; pointer-events:auto; line-height:1;}
 #scoresheet-section > ol > li:before {content:counter(item) ".";counter-increment: item; color:gray; margin-right:0.5vw;}
 
 #notes {display:none;}
@@ -87,7 +87,7 @@ select:focus {outline:0;}
   
   .social{margin:2vh 0 0 5vw; pointer-events:auto;}
 
-  #scoresheet-section > ol {height:30vh; width:90%; margin:0 0 0 5vw;}
+  #scoresheet-section > ol {height:35vh; width:90%; margin:0 0 0 5vw;}
   #scoresheet-section > ol > li {font-size:4vh; margin-bottom:0;}
   #scoresheet-section > ol > li:before {margin-right:0vw;}
   
