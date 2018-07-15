@@ -53,7 +53,7 @@ select option {text-transform:capitalize;}
 select:focus {outline:0;}
 
 #settings-section > ul {list-style:none; margin:0 0 0 3vw; padding:0; overflow:hidden;}
-#settings-section > ul > li {font-size:3vw; margin-bottom:1.5vh; pointer-events:auto;}
+#settings-section > ul > li {font-size:3vw; margin-bottom:1.0vh; pointer-events:auto; line-height:1;}
 #settings-section > ul > li > label {margin-right:1vw; opacity:.75;}
 #settings-section > ul > li > label:after {content:':';}
 #settings-section > ul > li#reset {float:left; margin-right:2vw;}
@@ -65,13 +65,13 @@ select:focus {outline:0;}
 .social iframe{vertical-align:middle;}
 .social span{margin:0 3vw 0 0;}
 
-#scoresheet-section > ol {list-style:none; height:65%; width:85%; display:flex; flex-direction:column; flex-wrap:wrap; overflow-x:scroll; -webkit-overflow-scrolling:touch; margin:0; padding:0; pointer-events:auto; touch-action:pan-x; counter-reset:item; margin-left:4vw;}
-#scoresheet-section > ol > li {font-size:3vw; margin:0 2vw 1vh 0; pointer-events:auto; overflow:hidden;}
+#scoresheet-section > ol {list-style:none; height:58vh; width:45vw; display:flex; flex-direction:column; flex-wrap:wrap; overflow-x:scroll; -webkit-overflow-scrolling:touch; margin:0; padding:0; pointer-events:auto; touch-action:pan-x; counter-reset:item; margin-left:4vw;}
+#scoresheet-section > ol > li {font-size:3vw; margin:0 2vw 1vh 0; pointer-events:auto;  line-height:1;}
 #scoresheet-section > ol > li:before {content:counter(item) ".";counter-increment: item; color:gray; margin-right:0.5vw;}
 
 #notes {display:none;}
 
-#advertising {width:100%; height:50px; position:absolute; left:0; bottom:10vh; text-align:right; pointer-events:auto;}
+#advertising {width:100%; height:50px; position:absolute; left:0; bottom:12.5vh; text-align:right; pointer-events:auto;}
 
 #done-btn {width:20%;position:absolute; left:40%; bottom:0; color:gray; font-size:2.5vw; padding:5vh 0; text-align:center; overflow:hidden; pointer-events:auto;}
 
