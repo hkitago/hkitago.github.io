@@ -53,7 +53,7 @@ self.addEventListener('fetch', function(event) {
     .then(function(response) {
       //return response || fetchAndCache(event.request);
       return response || fetch(event.request);
-    });
+    })
   );
 });
 
