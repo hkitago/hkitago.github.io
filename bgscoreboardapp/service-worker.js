@@ -17,7 +17,13 @@ self.addEventListener('install', function(event) {
     caches.open(cacheName)
     .then(function(cache) {
       //console.log('[ServiceWorker] Caching App Shell');
-      return cache.addAll(filesToCache);
+      //return cache.addAll(filesToCache);
+      // Magic is here. Look the  mode: 'no-cors' part.
+      cache.addAll(filesToCache.map(function(fileToCache) {
+         return new Request(fileToCache, { mode: 'no-cors' });
+      })).then(function() {
+        console.log('All resources have been fetched and cached.');
+      });
     })
   );
 });
