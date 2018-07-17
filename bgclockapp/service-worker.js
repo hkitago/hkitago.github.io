@@ -1,6 +1,6 @@
-var dataCacheName = 'bgClockAppData-v1';
-var cacheName = 'bgClockApp-2';
-var filesToCache = [
+const dataCacheName = 'bgClockAppData-v1';
+const cacheName = 'bgClockApp-3';
+const filesToCache = [
   './',
   './index.html',
   './scripts/app.js',
@@ -12,20 +12,46 @@ var filesToCache = [
 ];
 
 self.addEventListener('install', function(event) {
-  console.log('[ServiceWorker] Install');
+  //console.log('[ServiceWorker] Install');
   event.waitUntil(
-    caches.open(cacheName).then(function(cache) {
-      console.log('[ServiceWorker] Caching App Shell');
+    caches.open(cacheName)
+    .then(function(cache) {
+      //console.log('[ServiceWorker] Caching App Shell');
       return cache.addAll(filesToCache);
     })
   );
 });
 
 self.addEventListener('activate', function(event) {
-  console.log('[ServiceWorker] Activate');
+  //console.log('[ServiceWorker] Activate');
   event.waitUntil(self.clients.claim());
 });
 
 self.addEventListener('fetch', function(event) {
   //console.log('[ServiceWorker] Fetch', event.request.url);
+  event.respondWith(
+    caches.match(event.request)
+    .then(function(response) {
+      return response || fetchAndCache(event.request);
+    })
+  );
 });
+
+const fetchAndCache = function(url){
+  return fetch(url)
+  .then(function(response) {
+    // Check if we received a valid response
+    if (!response.ok) {
+      throw Error(response.statusText);
+    }
+    return caches.open(cacheName)
+    .then(function(cache) {
+      cache.put(url, response.clone());
+      return response;
+    });
+  })
+  .catch(function(error) {
+    //console.log('Request failed:', error);
+    // You could return a custom offline 404 page here
+  });
+};
