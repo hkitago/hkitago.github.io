@@ -204,7 +204,7 @@ dbPromise.then(function(db) {
   document.getElementById('turn-option').addEventListener('change', function() {
     settings.firstPlayer = settings.turnNow = Number(this.value);
     updateSettingsOS.call(this);
-    resetClock.call(this);
+    //resetClock.call(this);
   }, {passive:false});
 
   /*****************************************************************************
