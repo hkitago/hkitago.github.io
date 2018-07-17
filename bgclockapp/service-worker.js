@@ -51,8 +51,9 @@ self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request)
     .then(function(response) {
-      return response || fetchAndCache(event.request);
-    })
+      //return response || fetchAndCache(event.request);
+      return response || fetch(event.request);
+    });
   );
 });
 
