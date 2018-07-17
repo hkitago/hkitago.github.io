@@ -19,8 +19,9 @@ self.addEventListener('install', function(event) {
       //console.log('[ServiceWorker] Caching App Shell');
       //return cache.addAll(filesToCache);
       cache.addAll(filesToCache.map(function(fileToCache) {
-         return new Request(fileToCache, { mode: 'no-cors' });
-      })).then(function() {
+         return new Request(fileToCache, { cache: 'no-cache', mode: 'no-cors' });
+      }))
+      .then(function() {
         //console.log('All resources have been fetched and cached.');
       });
     })
@@ -29,7 +30,20 @@ self.addEventListener('install', function(event) {
 
 self.addEventListener('activate', function(event) {
   //console.log('[ServiceWorker] Activate');
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(
+    caches.keys()
+    .then(function(cachedNames) {
+      return Promise.all(
+        cachedNames.map(function(cachedName) {
+          if (cacheName.indexOf(cachedName) === -1) {
+            // If this cache name isn't present in the array of "expected" cache names, then delete it.
+            //console.log('Deleting out of date cache:', cachedName);
+            return caches.delete(cachedName);
+          }
+        })
+      );
+    })
+  );
 });
 
 self.addEventListener('fetch', function(event) {
