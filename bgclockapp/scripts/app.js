@@ -703,11 +703,19 @@ dbPromise.then(function(db) {
     }
   }, {passive:false});
 
-  // Add feature check for Service Workers here
-  if('serviceWorker' in navigator) {
-    navigator.serviceWorker
-             .register('./service-worker.js')
-             .then(function() { console.log('Service Worker Registered'); });
+  /*****************************************************************************
+   *
+   * Service Workers
+   *
+   ****************************************************************************/
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+    .then(function(registration) {
+      console.log('Registered:', registration);
+    })
+    .catch(function(error) {
+      //console.log('Registration failed: ', error);
+    });
   }
 
 })();
