@@ -4,7 +4,7 @@
   const exp = {
     get lang(){
       let lang = window.navigator.language;
-      return lang && lang.length > 2 ? lang.substring(0, 2) : 'en';
+      return lang ? lang.substring(0, 2) : 'en';
     },
     labelStrings: {
       en: {
