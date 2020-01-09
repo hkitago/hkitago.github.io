@@ -17,7 +17,10 @@
   let undoSettings = {};
   let addIntvalID;
   let maxMatch;
-  
+
+  const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  const scoresheetE = document.getElementById('scoresheet-section').querySelector(':scope ol');
+
   import('../lib/idb.js')
     .then(() => {
       //check for support
@@ -56,7 +59,17 @@
         updateResetBtn.call(this);
         updateScoreBoardPane.call(this);
         // Initialize Settings Pane
-        document.getElementById('appearance-style').setAttribute('href', 'styles/' + settings.appearance.toLowerCase() + '.css');
+
+        if(settings.appearance.toLowerCase() === 'auto'){
+          document.getElementById('appearance-style').setAttribute('href', 'styles/' + (darkModeMediaQuery.matches ? 'Dark' : 'Light').toLowerCase() + '.css')
+          darkModeMediaQuery.addListener((e) => {
+            document.getElementById('appearance-style').setAttribute('href', 'styles/' + (e.matches ? 'Dark' : 'Light').toLowerCase() + '.css')
+          })
+        }
+        else {
+          document.getElementById('appearance-style').setAttribute('href', 'styles/' + settings.appearance.toLowerCase() + '.css')          
+        }
+
         document.getElementById('appearance-option').value = settings.appearance;
         document.getElementById('font-option').value = settings.font;
         document.getElementById('language-option').value = settings.language;
@@ -102,7 +115,17 @@
   document.getElementById('appearance-option').addEventListener('change', function() {
     settings.appearance = this.value;
     updateSettingsOS.call(this);
-    document.getElementById('appearance-style').setAttribute('href', 'styles/' + settings.appearance.toLowerCase() + '.css');
+
+    if(settings.appearance.toLowerCase() === 'auto'){
+      document.getElementById('appearance-style').setAttribute('href', 'styles/' + (darkModeMediaQuery.matches ? 'Dark' : 'Light').toLowerCase() + '.css')
+      darkModeMediaQuery.addListener((e) => {
+        document.getElementById('appearance-style').setAttribute('href', 'styles/' + (e.matches ? 'Dark' : 'Light').toLowerCase() + '.css')
+      })
+    }
+    else {
+      document.getElementById('appearance-style').setAttribute('href', 'styles/' + settings.appearance.toLowerCase() + '.css')          
+    }
+
   });
 
   document.getElementById('font-option').addEventListener('change', function() {
@@ -316,7 +339,9 @@
     const liNode = document.createElement('li');
     liNode.id = 'score-' + id;
     liNode.appendChild(spanNode);
-    document.getElementById('scoresheet-section').querySelector(':scope ol').appendChild(liNode);
+
+    scoresheetE.appendChild(liNode);
+    scoresheetE.scrollLeft = scoresheetE.scrollWidth - scoresheetE.offsetWidth;
 
     liNode.addEventListener('click', function(){
       undoLogs = [];
@@ -521,6 +546,24 @@
       flipNodes[1].click();
     }
   }, {passive:false});
+
+  /*****************************************************************************
+  *
+  * Share API
+  *
+  ****************************************************************************/
+  
+  document.getElementById('share').addEventListener('click', async (event) => {
+    try{
+      await navigator.share({
+        title: 'Backgammon Scoreboard App',
+        text: 'Backgammon Scoreboard App',
+        url: 'https://hkitago.github.io/bgscoreboardapp/index.html',
+      });
+    } catch(error){
+      //console.log(error);
+    }
+  });
 
   /*****************************************************************************
    *

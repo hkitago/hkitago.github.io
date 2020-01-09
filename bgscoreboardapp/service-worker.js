@@ -8,7 +8,7 @@ const filesToCache = [
   './lib/idb.js',
   './styles/default.css',
   './styles/dark.css',
-  './styles/bright.css'
+  './styles/light.css'
 ];
 
 self.addEventListener('install', function(event) {

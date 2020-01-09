@@ -45,7 +45,7 @@ body {background-color:black;}
 /* Settings Pane */
 .settings-pane > #settings-wrapper {display:flex; height:100%; overflow:hidden;}
 #settings-section {width:47%;}
-#scoresheet-section {width:53%;}
+#scoresheet-section {width:53%; height:100%; display:flex; flex-direction:column;}
 .settings-pane > #settings-wrapper > div > h1 {font-size:2.5vw; color:gray; margin:2vh 2vw 1vh; font-weight:normal;}
 
 select {background-color:transparent; color:#DEDEDE; border:none; padding:0; margin:0; -webkit-appearance:none; appearance:none; font-size:3vw; pointer-events:auto;}
@@ -60,24 +60,25 @@ select:focus {outline:0;}
 #settings-section > ul > li#undo {display:inline-block;}
 #settings-section > ul > li#undo span {background:#DEDEDE; color:#212121; border-radius:3vw; padding:0 2vw;}
 #settings-section > ul > li.disabled {opacity:.3;}
+#settings-section > ul > li#share {margin-top:5vh; visibility:hidden;}
 
 .social{margin:3vh 0 0 3vw; pointer-events:auto;}
 .social iframe{vertical-align:middle;}
 .social span{margin:0 3vw 0 0;}
 
-#scoresheet-section > ol {list-style:none; height:55vh; width:45vw; display:flex; flex-direction:column; flex-wrap:wrap; overflow-x:scroll; -webkit-overflow-scrolling:touch; margin:0; padding:0; pointer-events:auto; touch-action:pan-x; counter-reset:item; margin-left:4vw;}
-#scoresheet-section > ol > li {font-size:3vw; margin:0 2vw 1vh 0; pointer-events:auto; line-height:1;}
-#scoresheet-section > ol > li:before {content:counter(item) ".";counter-increment: item; color:gray; margin-right:0.5vw;}
+#scoresheet-section > ol {list-style:none; height:100%; width:90%; display:flex; flex-direction:column; flex-wrap:wrap; overflow-x:scroll; -webkit-overflow-scrolling:touch; margin:1vh 0 10vh 3vw; padding:0; pointer-events:auto; touch-action:pan-x; counter-reset:item;}
+#scoresheet-section > ol > li {font-size:3vw; margin:0 1vw 2vh 0; pointer-events:auto; line-height:1; }
+#scoresheet-section > ol > li:before {content:counter(item) ".";counter-increment: item; color:gray; margin-right:0.5vw; min-width:2em; display: inline-block; text-align:right;}
 
 #notes {display:none;}
 
-#advertising {width:100%; height:50px; position:absolute; left:0; bottom:12.5vh; text-align:right; pointer-events:auto;}
+#advertising {width:100%; height:50px; position:absolute; left:0; bottom:12.5vh; text-align:right; pointer-events:auto; display:none;}
 
 #done-btn {width:20%;position:absolute; left:40%; bottom:0; color:gray; font-size:2.5vw; padding:5vh 0; text-align:center; overflow:hidden; pointer-events:auto;}
 
 @media (orientation: portrait) {
   .container {width:96%; height:98%; top:1%; left:2%;}
-  .settings-pane > #settings-wrapper {display:block; height:auto;}
+  .settings-pane > #settings-wrapper {flex-direction:column;}
   #settings-section {width:100%;}
   #scoresheet-section {width:100%;}
   .settings-pane > #settings-wrapper > div > h1 {font-size:3vh; margin:1vh 2vw 0;}
@@ -87,11 +88,11 @@ select:focus {outline:0;}
   
   .social{margin:2vh 0 0 5vw; pointer-events:auto;}
 
-  #scoresheet-section > ol {height:35vh; width:90%; margin:0 0 0 5vw;}
+  #scoresheet-section > ol {height:100%; width:90%; margin:0 0 7vh 5vw; flex:1;}
   #scoresheet-section > ol > li {font-size:4vh; margin-bottom:0;}
   #scoresheet-section > ol > li:before {margin-right:0vw;}
   
-  #notes {display:block; width:100%; position:absolute; left:0; bottom:12.5vh; text-align:center; font-size:3vw; color:gray;}
+  #notes {display:block; width:100%; position:absolute; left:0; bottom:2vh; text-align:center; font-size:3vw; color:gray;}
   
   #advertising {width:100%; bottom:1vh; text-align:center;}
   
