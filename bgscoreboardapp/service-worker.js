@@ -1,5 +1,5 @@
 const dataCacheName = 'bgScoreBoardAppData-v1';
-const cacheName = 'bgScoreBoardApp-5';
+const cacheName = 'bgScoreBoardApp-6';
 const filesToCache = [
   './',
   './index.html',
