@@ -28,17 +28,20 @@ body{  background:black; font-family:-apple-system, 'Arial Black', sans-serif; f
   /* variation */
   left: 2px;
   text-shadow: 1px 0 blue;
-  
-  /* important: opaque background masks the original */
-  animation: glitch 1s infinite linear 0s alternate-reverse;
 }
 .glitch::after {
   /* variation */
   left: -2px;
   text-shadow: -1px 0 red;
-  
+}
+
+.on::before {
   /* important: opaque background masks the original */
-  animation: glitch 1s infinite ease 1s alternate;
+  animation: glitch 1s infinite linear 0s alternate-reverse; 
+}
+.on::after {
+  /* important: opaque background masks the original */
+  animation: glitch 1s infinite ease 1s alternate; 
 }
 
 </style>

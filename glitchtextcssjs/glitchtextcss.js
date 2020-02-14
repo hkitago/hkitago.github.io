@@ -1,5 +1,5 @@
 (()=>{
-  'use strict';
+  'use strict'
   const app = {}, settings = {}
   app.d = document
   app.glitches = app.d.getElementsByClassName('glitch')
@@ -16,8 +16,9 @@
     }
     cssText += '}'
     const sE = app.d.createElement('style')
-    ,     tE = app.d.createTextNode(cssText);
-    sE.appendChild(tE);
-    app.d.head.appendChild(sE);
+    ,     tE = app.d.createTextNode(cssText)
+    sE.appendChild(tE)
+    app.d.head.appendChild(sE)
+    app.glitches[i].classList.add('on')
   }
 })()
