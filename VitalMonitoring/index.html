@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>Vital Monitoring</title>
+<style>
+html, body { width:100%; height:100%; margin:0; padding:0; font-size:100%; font-family:'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif; line-height:1; overflow:hidden;}
+a, a:link, a:visited { text-decoration:none; }
+a:hover { text-decoration:underline; cursor:pointer; }
+
+body { background-color:black; }
+ul { list-style:none; margin:0; padding:0; overflow:hidden; }
+dl,dt,dd,p {margin:0;}
+
+@font-face {
+  font-family: 'Andale Mono';
+  src: url('Andale-Mono.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Fjalla One';
+  src: url('FjallaOne-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+header {background-color:#A9A9A9; color:white; width:100%; height:3vh; margin-top:1vh;}
+header > ul {display:flex; margin-left:3vw;}
+header > ul > li {line-height:3vh; font-size:0.9em; font-family:-apple-system, 'Andale Mono', 'メイリオ', Meiryo, monospace;}
+header > ul > li:nth-child(1){width:15vw;}
+header > ul > li:not(:first-child){flex:1;}
+header > ul > li:last-child{text-align:center;}
+
+section > ul {width:96%; margin:5vh auto 0;}
+section > ul > li {display:flex; height:21vh;}
+section > ul > li:nth-child(1){color:#3FFA00;}
+section > ul > li:nth-child(2){color:#41EEFF;}
+section > ul > li:nth-child(3){color:#FDFB00;}
+
+section > ul > li > div:not(:nth-child(4)) {font-family: 'Andale Mono', monospace;}
+section > ul > li > div:nth-child(1){width:5vw;font-size:1.2em;}
+section > ul > li > div:nth-child(2){width:48vw;overflow:hidden; position:relative;}
+section > ul > li > div:nth-child(2) > span {display:inline-block; background-color:black;width:5vw;height:100%; position:absolute; left:-3vw; z-index:10;}
+
+section > ul > li > div:nth-child(2) > div {position:absolute; width:100%; height:100%; overflow:hidden; background-color:black;}
+section > ul > li > div:nth-child(2) > div > img {position: relative; top: 50%; transform: translateY(-50%);}
+section > ul > li > div:nth-child(2) > div:nth-child(2) {z-index:1;}
+section > ul > li > div:nth-child(2) > div:nth-child(3) {z-index:2; left:-3%; width:103%;}
+section > ul > li > div:nth-child(2) > div:nth-child(2) > img {height:100px;}
+section > ul > li > div:nth-child(2) > div:nth-child(3) > img {height:100px;}
+
+@keyframes g1 {
+  0% { width:0%; }
+  100% { width:100%; }
+}
+
+@keyframes g2 {
+  0% { width:0%; }
+  100% { width:103%; }
+}
+.g1Animation {animation: g1 4.3s linear forwards;}
+.g2Animation {animation: g2 4.3s linear forwards;}
+
+@keyframes screen {
+  0% { left:-5vw; }
+  100% { left:53vw; }
+}
+.screen { animation: screen 5s linear infinite; }
+
+section > ul > li > div:nth-child(3){width:8vw; font-size:1.8em;}
+section > ul > li > div:nth-child(3) > dl {width:100%;}
+section > ul > li > div:nth-child(3) > dl > dd {text-align:right; margin-top:1vh;}
+section > ul > li > div:nth-child(4) {flex:1; font-family: 'Fjalla One', sans-serif; font-size:11em; line-height:21vh; text-align:right;}
+section > ul > li:nth-child(2) > div:nth-child(5){color:#3FFA00;}
+section > ul > li > div:nth-child(5){font-size:1.8em; width:13vw;}
+section > ul > li > div:nth-child(5) > dl {width:85%;float:right;}
+section > ul > li > div:nth-child(5) > dl > dd {text-align:right; margin-top:1vh;}
+section > ul > li > div:nth-child(5) > dl > dd > span {display:block; font-size:1.7em;}
+section > ul > li:nth-child(1) > div:nth-child(5) > dl > dd > span {font-size:2.2em;}
+section > ul > li:nth-child(2) > div:nth-child(5) > dl {margin-top:2vh;}
+
+footer > ul {width:80vw; margin:3vh 0 0 2%;}
+footer > ul > li {color:#F82400;display:flex;}
+
+footer > ul > li:nth-child(1) {height:3vh; line-height:3vh;}
+footer > ul > li:nth-child(1) > div {font-family: 'Andale Mono', monospace; font-size:1.2em; flex:1;}
+footer > ul > li:nth-child(1) > div:nth-child(2) {text-align:center;}
+footer > ul > li:nth-child(1) > div:nth-child(3) {text-align:right;}
+footer > ul > li:nth-child(1) > div:nth-child(3) > span{margin-right:1vw;}
+footer > ul > li:nth-child(1) > div:nth-child(3) > span:first-child{display:inline-block;width:10vw; height:1vh; border:1px solid #F82400;position: relative;}
+.meter > span {display:block; height:0.6vh; background-color:#F82400; width:70%; margin:0.2vh;}
+
+@keyframes progress {
+  0% {
+    width:70%;
+  }
+  100% {
+    width:90%;
+  }
+}
+.animate > span {
+  animation: progress 120s linear infinite;
+}
+
+footer > ul > li:nth-child(2) {height:20vh; line-height:20vh;}
+footer > ul > li:nth-child(2) > sup {line-height:1;}
+footer > ul > li:nth-child(2) > sup:first-child {text-indent:0.5em;}
+footer > ul > li:nth-child(2) > div:first-child {font-family: 'Andale Mono', monospace;}
+footer > ul > li:nth-child(2) > div:not(:first-child) {font-family: 'Fjalla One', sans-serif;}
+footer > ul > li:nth-child(2) > div:nth-child(2){text-align:right; line-height:1; display:flex; align-items:center; justify-content:center; flex:1;}
+footer > ul > li:nth-child(2) > div:nth-child(3){text-align:center; font-size:10em; width:50vw;}
+footer > ul > li:nth-child(2) > div:nth-child(4){text-align:center; font-size:8em; width:17vw;}
+footer > ul > li:nth-child(2) > div:nth-child(4) > span {font-size:0.9em; }
+
+@keyframes blink {
+  25% { opacity: 0.0; }
+  50% { opacity: 1.0; }
+  75% { opacity: 0.0; }
+  100% { opacity: 1.0; }
+}
+.blink {
+  animation: blink 0.75s step-start infinite;
+}
+</style>
+</head>
+<body>
+<header><ul><li>Bed 3</li><li>木下繁夫</li><li>Adult</li><li>3 Waves</li></ul></header>
+<section>
+<ul>
+<li><div>II</div><div id="0"><span class="screen"></span><div class="g1"><img src="graph-1.png"></div><div class="g2"><img src="graph-1.png"></div></div><div><dl><dt>HR</dt><dd>120<br>50</dd></dl></div><div id="num1">98</div><div><dl><dt>Pulse</dt><dd><span id="num2">98</span></dd></dl></div></li>
+<li><div>Pleth</div><div id="1"><span class="screen"></span><div class="g1"><img src="graph-2.png"></div><div class="g2"><img src="graph-2.png"></div></div><div><dl><dt>SpO<sub>2</sub></dt><dd>110<br>90</dd></dl></div><div>100</div><div><dl><dt>Temp</dt><dd><span id="num6">37.5</span>39.0<br>35.0</dd></dl></div></li>
+<li><div>Resp</div><div id="2"><span class="screen"></span><div class="g1"><img src="graph-3.png"></div><div class="g2"><img src="graph-3.png"></div></div><div><dl><dt>RR</dt><dd>30<br>8</dd></dl></div><div>12</div><div></div></li></ul>
+</section>
+
+<footer>
+<ul><li><div>NBP</div><div>Auto 10 min</div><div><span id="progress" class="meter"><span></span></span><span id="time">07:00</span>NBP</div></li>
+<li><sup>Sys.</sup><div><span>160<br>80</span></div><div><span id="num3">105</span>/<span id="num4">57</span></div><div>(<span id="num5">89</span>)</div><sup>mmHg</sup></li></ul></footer>
+
+<script>
+const image = new Image();
+image.src = 'graph-1.png';
+let img1s = {};
+let img1 = 0;
+image.onload = function(){
+  img1s.from = image.width;
+  img1s.to = 700;
+  img1 = img1s.from;
+};
+
+const g1Nodes = document.querySelectorAll('.g1');
+const g2Nodes = document.querySelectorAll('.g2');
+const isSwitchs = [0, 0, 0];
+
+const switchZIndex = function(id){
+  g1Nodes[id].style.zIndex = isSwitchs[id] === 0 ? 1 : 2;
+  g2Nodes[id].style.zIndex = isSwitchs[id] === 0 ? 2 : 1;
+};
+
+const setg1Animation = function(){
+  for(let i = 0, max = g1Nodes.length; i < max; i++){
+    g1Nodes[i].classList.add('g1Animation');
+    g1Nodes[i].addEventListener('animationend', function(e){
+      this.classList.remove('g1Animation');
+    }, false);
+  }
+}
+
+const setg2Animation = function(){
+  for(let i = 0, max = g2Nodes.length; i < max; i++){
+    g2Nodes[i].classList.add('g2Animation');
+    g2Nodes[i].addEventListener('animationend', function(e){
+      this.classList.remove('g2Animation');
+    }, false);
+  }
+};
+
+const screenNodes = document.querySelectorAll('.screen');
+for(let i = 0, max = screenNodes.length; i < max; i++){
+  const delay = (Math.floor(Math.random() * (5 + 1))) / 10;
+  screenNodes[i].style.webkitAnimationDelay = delay + 's';
+  screenNodes[i].addEventListener('webkitAnimationIteration', function(e){
+    const id = Number(this.parentNode.id);
+    const isSwitch = isSwitchs[id];
+    isSwitchs[id] = isSwitch === 0 ? 1 : 0;
+    switchZIndex.call(this, id);
+    if(isSwitchs[id] === 0){
+      g2Nodes[id].classList.add('g2Animation');
+      g2Nodes[id].addEventListener('animationend', function(){
+        this.classList.remove('g2Animation');
+      }, false);
+      if(id === 0){
+        g2Nodes[id].childNodes[0].style.width = img1 + 'px';
+      }
+    }
+    if(isSwitchs[id] === 1){
+      g1Nodes[id].classList.add('g1Animation');
+      g1Nodes[id].addEventListener('animationend', function(e){
+        this.classList.remove('g1Animation');
+      }, false);
+      if(id === 0){
+        g1Nodes[id].childNodes[0].style.width = img1 + 'px';
+      }
+    }
+  }, false);
+}
+
+/* Number Animation */
+const range = 5;
+const iMax = 2000;
+const iMin = 777;
+const i1Max = 3000;
+const i1Min = 1500;
+let intval = 0;
+
+const num1Node = document.getElementById('num1');
+const num2Node = document.getElementById('num2');
+const num3Node = document.getElementById('num3');
+const num4Node = document.getElementById('num4');
+const num5Node = document.getElementById('num5');
+
+let num1s = {from:98, to:135};
+let num3s = {from:105, to:64};
+let num4s = {from:57, to:31};
+let num5s = {from:89, to:42};
+let num6s = {from:37.5, to:36.5};
+
+let num1 = num1s.from;
+let num3 = num3s.from;
+let num4 = num4s.from;
+let num5 = num5s.from;
+let num6 = num6s.from;
+
+
+document.onkeydown = function(e){
+  if(e.keyCode === 32) {
+    num1Node.classList.add('blink');
+    num2Node.classList.add('blink');
+    num3Node.classList.add('blink');
+    num4Node.classList.add('blink');
+    num5Node.classList.add('blink');
+  }
+  if(e.keyCode === 13) {
+    const time = 30000; //in ms
+    const fps = 500;
+
+    const wRate = ((img1s.to - img1s.from) / time ) * fps;
+    const imgTimer = setInterval(function() {
+      img1 = img1 + wRate;
+      if (img1 <= img1s.to) {
+        img1 = img1s.to;
+        clearInterval(imgTimer);
+      }
+    }, fps);
+
+    const i1 = ((num1s.to - num1s.from) / time ) * fps;
+    const i3 = ((num3s.to - num3s.from) / time ) * fps;
+    const i4 = ((num4s.to - num4s.from) / time ) * fps;
+    const i5 = ((num5s.to - num5s.from) / time ) * fps;
+    const i6 = ((num6s.to - num6s.from) / time ) * fps;
+
+    const timer1 = setInterval(function() {
+      num1 = Math.ceil(num1 + i1);
+      if (num1 >= num1s.to) {
+        num1 = num1s.to;
+        clearInterval(timer1);
+      }
+    }, fps);
+    const timer3 = setInterval(function() {
+      num3 = Math.floor(num3 + i3);
+      if (num3 <= num3s.to) {
+        num3 = num3s.to;
+        clearInterval(timer3);
+      }
+    }, fps);
+    const timer4 = setInterval(function() {
+      num4 = Math.floor(num4 + i4);
+      if (num4 <= num4s.to) {
+        num4 = num4s.to;
+        clearInterval(timer4);
+      }
+    }, fps);
+    const timer5 = setInterval(function() {
+      num5 = Math.floor(num5 + i5);
+      if (num5 <= num5s.to) {
+        num5 = num5s.to;
+        clearInterval(timer5);
+      }
+    }, fps);
+    const timer6 = setInterval(function() {
+      const num6Node = document.getElementById('num6');
+      num6 = num6 + i6;
+      num6Node.textContent = num6.toFixed(1);
+      if (num6 <= num6s.to) {
+        num6 = num6s.to;
+        clearInterval(timer6);
+      }
+    }, fps);
+  }
+};
+
+(function autoChangeNum1(){
+  let n1Max = num1 + range;
+  let n1Min = num1 - range;
+  num1Node.textContent = num2Node.textContent = Math.floor(Math.random() * (n1Max - n1Min + 1)) + n1Min;
+  intval = Math.floor(Math.random() * (iMax - iMin + 1)) + iMin;
+  setTimeout(autoChangeNum1, intval);
+}());
+
+(function autoChangeNum3(){
+  let n3Max = num3 + range;
+  let n3Min = num3 - range;
+  num3Node.textContent = Math.floor(Math.random() * (n3Max - n3Min + 1)) + n3Min;
+  intval = Math.floor(Math.random() * (i1Max - i1Min + 1)) + i1Min;
+  setTimeout(autoChangeNum3, intval);
+}());
+
+(function autoChangeNum4(){
+  let n4Max = num4 + range;
+  let n4Min = num4 - range;
+  num4Node.textContent = Math.floor(Math.random() * (n4Max - n4Min + 1)) + n4Min;
+  intval = Math.floor(Math.random() * (i1Max - i1Min + 1)) + i1Min;
+  setTimeout(autoChangeNum4, intval);
+}());
+
+(function autoChangeNum5(){
+  let n5Max = num5 + range;
+  let n5Min = num5 - range;
+  num5Node.textContent = Math.floor(Math.random() * (n5Max - n5Min + 1)) + n5Min;
+  intval = Math.floor(Math.random() * (i1Max - i1Min + 1)) + i1Min;
+  setTimeout(autoChangeNum5, intval);
+}());
+
+document.getElementById('progress').classList.add('animate');
+setInterval(function(){
+  const a = document.getElementById('time').textContent.split(':');
+  const sec = Number(a[0]) * 60 + Number(a[1]) + 1;
+  document.getElementById('time').textContent = new Date((sec > 7 * 60 + 120 - 1 ? 7 * 60 : sec) * 1000).toISOString().substr(14, 5);
+}, 1000);
+
+</script>
+
+</body>
+</html>
