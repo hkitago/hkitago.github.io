@@ -39,7 +39,7 @@ section > ul > li:nth-child(2){color:#41EEFF;}
 section > ul > li:nth-child(3){color:#FDFB00;}
 
 section > ul > li > div:not(:nth-child(4)) {font-family: 'Andale Mono', monospace;}
-section > ul > li > div:nth-child(1){width:5vw;font-size:1.2em;}
+section > ul > li > div:nth-child(1){width:5vw;font-size:3vh;}
 section > ul > li > div:nth-child(2){width:48vw;overflow:hidden; position:relative;}
 section > ul > li > div:nth-child(2) > span {display:inline-block; background-color:black;width:5vw;height:100%; position:absolute; left:-3vw; z-index:10;}
 
@@ -68,12 +68,12 @@ section > ul > li > div:nth-child(2) > div:nth-child(3) > img {height:100px;}
 }
 .screen { animation: screen 5s linear infinite; }
 
-section > ul > li > div:nth-child(3){width:8vw; font-size:1.8em;}
+section > ul > li > div:nth-child(3){width:8vw; font-size:3vh;}
 section > ul > li > div:nth-child(3) > dl {width:100%;}
 section > ul > li > div:nth-child(3) > dl > dd {text-align:right; margin-top:1vh;}
-section > ul > li > div:nth-child(4) {flex:1; font-family: 'Fjalla One', sans-serif; font-size:11em; line-height:21vh; text-align:right;}
+section > ul > li > div:nth-child(4) {flex:1; font-family: 'Fjalla One', sans-serif; font-size:17.5vh; display:flex; justify-content:flex-end;}
 section > ul > li:nth-child(2) > div:nth-child(5){color:#3FFA00;}
-section > ul > li > div:nth-child(5){font-size:1.8em; width:13vw;}
+section > ul > li > div:nth-child(5){font-size:3vh; width:13vw;}
 section > ul > li > div:nth-child(5) > dl {width:85%;float:right;}
 section > ul > li > div:nth-child(5) > dl > dd {text-align:right; margin-top:1vh;}
 section > ul > li > div:nth-child(5) > dl > dd > span {display:block; font-size:1.7em;}
@@ -84,7 +84,7 @@ footer > ul {width:80vw; margin:3vh 0 0 2%;}
 footer > ul > li {color:#F82400;display:flex;}
 
 footer > ul > li:nth-child(1) {height:3vh; display:flex; align-items:center;}
-footer > ul > li:nth-child(1) > div {font-family: 'Andale Mono', monospace; font-size:1.2em; flex:1;}
+footer > ul > li:nth-child(1) > div {font-family: 'Andale Mono', monospace; font-size:3vh; flex:1;}
 footer > ul > li:nth-child(1) > div:nth-child(2) {text-align:center;}
 footer > ul > li:nth-child(1) > div:nth-child(3) {text-align:right;}
 footer > ul > li:nth-child(1) > div:nth-child(3) > span{margin-right:1vw;}
@@ -103,16 +103,20 @@ footer > ul > li:nth-child(1) > div:nth-child(3) > span:first-child{display:inli
   animation: progress 120s linear infinite;
 }
 
-footer > ul > li:nth-child(2) {height:20vh; line-height:20vh;}
-footer > ul > li:nth-child(2) > sup {line-height:1;}
+footer > ul > li:nth-child(2) {height:20vh; display:flex;}
+footer > ul > li:nth-child(2) > sup {line-height:1; font-size:2.5vh;}
 footer > ul > li:nth-child(2) > sup:first-child {text-indent:0.5em;}
 footer > ul > li:nth-child(2) > div:first-child {font-family: 'Andale Mono', monospace;}
 footer > ul > li:nth-child(2) > div:not(:first-child) {font-family: 'Fjalla One', sans-serif;}
-footer > ul > li:nth-child(2) > div:nth-child(2){text-align:right; line-height:1; display:flex; align-items:center; justify-content:center; flex:1;}
-footer > ul > li:nth-child(2) > div:nth-child(3){font-size:10em; width:50vw; display:flex; justify-content:center; align-items:center;}
+footer > ul > li:nth-child(2) > ul:nth-child(2){flex:1; display:flex; flex-direction:column;}
+footer > ul > li:nth-child(2) > ul:nth-child(2) > li {overflow:hidden; flex:1; display:flex; justify-content:flex-end; width:60%; font-size:2vh;}
+footer > ul > li:nth-child(2) > ul:nth-child(2) > li:first-child {align-items:flex-end;}
+footer > ul > li:nth-child(2) > div:nth-child(3){font-size:15vh; width:50vw; display:flex; justify-content:center; align-items:center;}
 footer > ul > li:nth-child(2) > div:nth-child(3) > span:first-child::after{content:'/';}
-footer > ul > li:nth-child(2) > div:nth-child(4){font-size:8em; width:17vw; display:flex; justify-content:center; align-items:center;}
+footer > ul > li:nth-child(2) > div:nth-child(4){font-size:15vh; width:17vw; display:flex; justify-content:center; align-items:center;}
 footer > ul > li:nth-child(2) > div:nth-child(4) > span {font-size:0.9em; }
+span#num5::before {content:'(';}
+span#num5::after {content:')';}
 
 @keyframes blink {
   25% { opacity: 0.0; }
@@ -138,7 +142,7 @@ footer > ul > li:nth-child(2) > div:nth-child(4) > span {font-size:0.9em; }
 
 <footer>
 <ul><li><div>NBP</div><div>Auto 10 min</div><div><span id="progress" class="meter"><span></span></span><span id="time">07:00</span>NBP</div></li>
-<li><sup>Sys.</sup><div><span>160<br>80</span></div><div class="num"><span id="num3">105</span><span id="num4">57</span></div><div>(<span id="num5" class="num">89</span>)</div><sup>mmHg</sup></li></ul></footer>
+<li><sup>Sys.</sup><ul><li>160</li><li>80</li></ul><div class="num"><span id="num3">105</span><span id="num4">57</span></div><div><span id="num5" class="num">89</span></div><sup>mmHg</sup></li></ul></footer>
 
 <script>
 const image = new Image();
