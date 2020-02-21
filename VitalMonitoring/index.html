@@ -83,7 +83,7 @@ section > ul > li:nth-child(2) > div:nth-child(5) > dl {margin-top:2vh;}
 footer > ul {width:80vw; margin:3vh 0 0 2%;}
 footer > ul > li {color:#F82400;display:flex;}
 
-footer > ul > li:nth-child(1) {height:3vh; line-height:3vh;}
+footer > ul > li:nth-child(1) {height:3vh; display:flex; align-items:center;}
 footer > ul > li:nth-child(1) > div {font-family: 'Andale Mono', monospace; font-size:1.2em; flex:1;}
 footer > ul > li:nth-child(1) > div:nth-child(2) {text-align:center;}
 footer > ul > li:nth-child(1) > div:nth-child(3) {text-align:right;}
@@ -109,8 +109,9 @@ footer > ul > li:nth-child(2) > sup:first-child {text-indent:0.5em;}
 footer > ul > li:nth-child(2) > div:first-child {font-family: 'Andale Mono', monospace;}
 footer > ul > li:nth-child(2) > div:not(:first-child) {font-family: 'Fjalla One', sans-serif;}
 footer > ul > li:nth-child(2) > div:nth-child(2){text-align:right; line-height:1; display:flex; align-items:center; justify-content:center; flex:1;}
-footer > ul > li:nth-child(2) > div:nth-child(3){text-align:center; font-size:10em; width:50vw;}
-footer > ul > li:nth-child(2) > div:nth-child(4){text-align:center; font-size:8em; width:17vw;}
+footer > ul > li:nth-child(2) > div:nth-child(3){font-size:10em; width:50vw; display:flex; justify-content:center; align-items:center;}
+footer > ul > li:nth-child(2) > div:nth-child(3) > span:first-child::after{content:'/';}
+footer > ul > li:nth-child(2) > div:nth-child(4){font-size:8em; width:17vw; display:flex; justify-content:center; align-items:center;}
 footer > ul > li:nth-child(2) > div:nth-child(4) > span {font-size:0.9em; }
 
 @keyframes blink {
@@ -122,20 +123,22 @@ footer > ul > li:nth-child(2) > div:nth-child(4) > span {font-size:0.9em; }
 .blink {
   animation: blink 0.75s step-start infinite;
 }
+
+.num{font-variant-numeric:tabular-nums; font-feature-settings:'tnum';}
 </style>
 </head>
 <body>
 <header><ul><li>Bed 3</li><li>名無権兵衛</li><li>Adult</li><li>3 Waves</li></ul></header>
 <section>
 <ul>
-<li><div>II</div><div id="0"><span class="screen"></span><div class="g1"><img src="graph-1.png"></div><div class="g2"><img src="graph-1.png"></div></div><div><dl><dt>HR</dt><dd>120<br>50</dd></dl></div><div id="num1">98</div><div><dl><dt>Pulse</dt><dd><span id="num2">98</span></dd></dl></div></li>
-<li><div>Pleth</div><div id="1"><span class="screen"></span><div class="g1"><img src="graph-2.png"></div><div class="g2"><img src="graph-2.png"></div></div><div><dl><dt>SpO<sub>2</sub></dt><dd>110<br>90</dd></dl></div><div>100</div><div><dl><dt>Temp</dt><dd><span id="num6">37.5</span>39.0<br>35.0</dd></dl></div></li>
+<li><div>II</div><div id="0"><span class="screen"></span><div class="g1"><img src="graph-1.png"></div><div class="g2"><img src="graph-1.png"></div></div><div><dl><dt>HR</dt><dd>120<br>50</dd></dl></div><div id="num1" class="num">98</div><div><dl><dt>Pulse</dt><dd><span id="num2" class="num">98</span></dd></dl></div></li>
+<li><div>Pleth</div><div id="1"><span class="screen"></span><div class="g1"><img src="graph-2.png"></div><div class="g2"><img src="graph-2.png"></div></div><div><dl><dt>SpO<sub>2</sub></dt><dd>110<br>90</dd></dl></div><div>100</div><div><dl><dt>Temp</dt><dd><span id="num6" class="num">37.5</span>39.0<br>35.0</dd></dl></div></li>
 <li><div>Resp</div><div id="2"><span class="screen"></span><div class="g1"><img src="graph-3.png"></div><div class="g2"><img src="graph-3.png"></div></div><div><dl><dt>RR</dt><dd>30<br>8</dd></dl></div><div>12</div><div></div></li></ul>
 </section>
 
 <footer>
 <ul><li><div>NBP</div><div>Auto 10 min</div><div><span id="progress" class="meter"><span></span></span><span id="time">07:00</span>NBP</div></li>
-<li><sup>Sys.</sup><div><span>160<br>80</span></div><div><span id="num3">105</span>/<span id="num4">57</span></div><div>(<span id="num5">89</span>)</div><sup>mmHg</sup></li></ul></footer>
+<li><sup>Sys.</sup><div><span>160<br>80</span></div><div class="num"><span id="num3">105</span><span id="num4">57</span></div><div>(<span id="num5" class="num">89</span>)</div><sup>mmHg</sup></li></ul></footer>
 
 <script>
 const image = new Image();
