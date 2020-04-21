@@ -26,7 +26,7 @@
       "sizes": "512x512",
       "type": "image/png"
     }],
-  "start_url": "./?utm_source=homescreen",
+  "start_url": "./app.html?utm_source=homescreen",
   "display": "fullscreen",
   "background_color": "#000",
   "theme_color": "#000"
