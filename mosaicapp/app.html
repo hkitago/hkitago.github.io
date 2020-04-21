@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<title>MOSAIC APP</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="./manifest.json">
+<style>
+* {-webkit-tap-highlight-color:rgba(0,0,0,0); -webkit-user-select:none; -webkit-touch-callout:none;}
+html, body {overflow:hidden; width:100%; height:100%; margin:0; padding:0; font-size:100%; font-family:-apple-system,Roboto,'Droid Sans',sans-serif;}
+body{background-color:#EEE;}
+canvas {position:absolute;left:0;top:0;z-index:0;}
+#control{position:fixed;left:0;bottom:0;z-index:10;width:100%;height:auto;background:rgba(255,255,255,.7);display:flex;justify-content:space-around;align-items:center;padding:1vh 0;}
+input[type=file]{}
+input[type=range]{
+  -webkit-appearance: none;
+  margin: 0;
+  width: 50%;
+  box-sizing: border-box;
+}
+input[type=range]:focus {
+  outline: none;
+}
+/* WebKit・Blink向け 溝のスタイル */
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 1vh;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px rgba(0,0,0,.3);
+  background: rgba(0,0,0,.1);
+  border-radius: 1.3px;
+  border: 1px solid rgba(0,0,0,.5);
+}
+/* WebKit・Blink向け つまみのスタイル */
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 1px 1px 1px rgba(0,0,0,.3);
+  border: 1px solid rgba(0,0,0,.5);
+  height: 2vh;
+  width: 2vw;
+  border-radius: 3px;
+  background: rgba(255,255,255,.95);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top:calc(-0.5vh - 1px);
+}
+#points{display:none;}
+#pointsNum{display:none;font-size:1em; font-family:monospace;font-variant-numeric:tabular-nums;font-feature-settings:'tnum';min-width:3em;text-align:center;}
+[contenteditable] {
+    -webkit-user-select: text;
+    user-select: text;
+}
+button{display:none;}
+</style>
+</head>
+<body>
+<section id="control"><input type="file" accept="image/*" capture id="camera">
+<input type="range" min="1" max="75" id="points" value="25" /><div id="pointsNum" contenteditable="true" inputmode="decimal"></div><button id="saveImage">Save</button><button id="cancelBtn">Cancel</button></section>
+<script>(()=>{'use strict'
+let app = {}
+const x_canvas 	= window.innerWidth
+,			y_canvas 	= window.innerHeight
+
+//document.write('<canvas id="canvas" width="' + x_canvas + '" height="' + y_canvas + '"></canvas>')
+const canvasE = document.createElement('canvas')
+canvasE.width = x_canvas
+canvasE.height = y_canvas
+canvasE.id = 'canvas'
+document.body.appendChild(canvasE)
+
+app.imageData = {}
+
+const canvas = document.getElementById('canvas')
+const mem_canvas = document.createElement('canvas')
+const ctx = canvas.getContext('2d')
+const mem_context = mem_canvas.getContext('2d')
+
+const draw = () => {
+  ctx.clearRect(0, 0, x_canvas, y_canvas);
+  mem_context.clearRect(0, 0, x_canvas, y_canvas);
+
+  let img = new Image()
+  img.addEventListener('load', () => {
+    mem_canvas.width = app.rect.width < x_canvas ? img.width : x_canvas
+    mem_canvas.height = app.rect.height < y_canvas ? img.height : y_canvas
+    mem_context.drawImage(img, 0, 0, img.width, img.height, 0, 0, mem_canvas.width, mem_canvas.height)  
+    app.imageData = mem_context.getImageData(0, 0, mem_canvas.width, mem_canvas.height)
+    CreateMosaic(mem_context, mem_canvas.width, mem_canvas.height, Number(document.getElementById('points').value))
+    ctx.drawImage(mem_canvas, 0, 0)
+    document.getElementById('pointsNum').textContent = document.getElementById('points').value
+  }, {passive:false})
+  img.src = URL.createObjectURL(app.file);
+
+  document.getElementById('saveImage').addEventListener('click', saveImageHandler, {passive:false})
+}
+
+const saveImageHandler = () => {
+  let link = document.createElement('a')
+  link.href     = canvas.toDataURL(app.file.type)
+  link.download = app.file.name
+  link.click()
+}
+
+const CreateMosaic = (context, width, height, mosaicSize) => {
+  for (let y = 0; y < height; y = y + mosaicSize) {
+    for (let x = 0; x < width; x = x + mosaicSize) {
+      const cR = app.imageData.data[(y * width + x) * 4]
+      const cG = app.imageData.data[(y * width + x) * 4 + 1]
+      const cB = app.imageData.data[(y * width + x) * 4 + 2]
+
+      context.fillStyle = 'rgb(' + cR + ',' + cG + ',' + cB + ')'
+      context.fillRect(x, y, x + mosaicSize, y + mosaicSize)
+    }
+  }
+}
+
+app.rect = {'width':0, 'height':0,}
+document.getElementById('camera').addEventListener('change', (e)=>{
+  app.file = e.target.files[0]
+  const fr = new FileReader
+  fr.onload = () => {
+    const img = new Image
+    img.onload = () => {
+      app.rect.width  = img.width
+      app.rect.height = img.height
+      draw()
+    }
+    img.src = fr.result
+    document.getElementById('points').addEventListener('input', draw, {passive:false})
+    document.getElementById('camera').style.display = 'none'
+    document.getElementById('points').style.display = 'block'
+    document.getElementById('pointsNum').style.display = 'block'
+    document.getElementById('saveImage').style.display = 'block'
+    document.getElementById('cancelBtn').style.display = 'block'
+  }
+  fr.readAsDataURL(app.file)
+}, {passive:false})
+
+document.getElementById('pointsNum').textContent = document.getElementById('points').value
+document.getElementById('pointsNum').addEventListener('click', (e) => {
+  const range = document.createRange()
+  const sel = window.getSelection()
+  range.setStart(e.target.childNodes[0], e.target.childNodes[0].length)
+  range.collapse(true)
+  sel.removeAllRanges()
+  sel.addRange(range)
+  //e.target.focus()
+}, {passive:false})
+
+document.getElementById('pointsNum').addEventListener('blur', (e) => {
+  if (!e.target.textContent.match(/^\d{1,3}$/)){
+    e.target.textContent = document.getElementById('points').value
+    return false
+  }
+  document.getElementById('points').max = e.target.textContent
+}, {passive:false});
+document.getElementById('cancelBtn').addEventListener('click', (e) => {
+  location.reload()
+}, {passive:false});
+
+/*****************************************************************************
+ *
+ * Service Workers
+ *
+ ****************************************************************************/
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('./service-worker.js', {scope: './'})
+    .then(function(registration) {
+      //console.log('Registered:', registration);
+      registraion.update();
+    })
+    .catch(function(error) {
+      //console.log('Registration failed: ', error);
+    });
+  });
+}
+
+})()</script>
