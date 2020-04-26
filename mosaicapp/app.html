@@ -157,10 +157,10 @@ document.getElementById('pointsNum').addEventListener('blur', (e) => {
     return false
   }
   document.getElementById('points').max = e.target.textContent
-}, {passive:false});
+}, {passive:false})
 document.getElementById('cancelBtn').addEventListener('click', (e) => {
   location.reload()
-}, {passive:false});
+}, {passive:false})
 
 /*****************************************************************************
  *
@@ -172,13 +172,13 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('./service-worker.js', {scope: './'})
     .then(function(registration) {
-      //console.log('Registered:', registration);
-      registraion.update();
+      //console.log('Registered:', registration)
+      registraion.update()
     })
     .catch(function(error) {
-      //console.log('Registration failed: ', error);
-    });
-  });
+      //console.log('Registration failed: ', error)
+    })
+  })
 }
 
 })()</script>
