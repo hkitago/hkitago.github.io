@@ -1,5 +1,5 @@
 const dataCacheName = 'bgClockAppData-v1';
-const cacheName = 'bgClockApp-3';
+const cacheName = 'bgClockApp-4';
 const filesToCache = [
   './',
   './index.html',
@@ -8,7 +8,7 @@ const filesToCache = [
   './lib/idb.js',
   './styles/default.css',
   './styles/dark.css',
-  './styles/bright.css'
+  './styles/light.css'
 ];
 
 self.addEventListener('install', function(event) {
