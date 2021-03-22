@@ -27,7 +27,7 @@ body {background-color:black;}
 svg {position:absolute; top:0; left:0; width:100%; height:100%;}
 .path {stroke:#DEDEDE; animation-timing-function:linear; animation-fill-mode:forwards; transform-origin:center; transform:rotate(-90deg);}
 
-.controls-board {width:10%; position:relative;;}
+.controls-board {width:10%; position:relative;}
 #start-btn {width:100%; position:absolute; top:0; color:gray; font-size:2.5vw; text-align:center; padding:5vh 0; pointer-events:auto;}
 #delay-time {height:100%; text-align:center; font-size:7.5vw; color:#DEDEDE;}
 #delay-time > span {width:100%; position:absolute; top:50%; left:0; transform: translateY(-50%);}

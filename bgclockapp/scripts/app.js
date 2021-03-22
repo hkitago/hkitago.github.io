@@ -6,7 +6,7 @@
     isPaused: [true, true],
     appearance: 'Dark',
     font: 'System Default',
-    beep: 1,
+    beep: 0,
     language: 'English',
     matchTo: 3,
     minutesPerPoint: 2,
@@ -50,6 +50,8 @@
   let addIntvalID;
   let maxMatch;
 */
+  const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  let audioCtx = null;
   
   import('../lib/idb.js')
     .then(() => {
@@ -90,7 +92,15 @@
         updateClockBoardPane.call(this);
 
         // Initialize Settings Pane
-        document.getElementById('appearance-style').setAttribute('href', 'styles/' + settings.appearance.toLowerCase() + '.css');
+        if(settings.appearance.toLowerCase() === 'auto'){
+          document.getElementById('appearance-style').setAttribute('href', 'styles/' + (darkModeMediaQuery.matches ? 'Dark' : 'Light').toLowerCase() + '.css')
+          darkModeMediaQuery.addListener((e) => {
+            document.getElementById('appearance-style').setAttribute('href', 'styles/' + (e.matches ? 'Dark' : 'Light').toLowerCase() + '.css')
+          })
+        }
+        else {
+          document.getElementById('appearance-style').setAttribute('href', 'styles/' + settings.appearance.toLowerCase() + '.css')          
+        }
         document.getElementById('appearance-option').value = settings.appearance;
         document.getElementById('font-option').value = settings.font;
         document.getElementById('language-option').value = settings.language;
@@ -145,7 +155,15 @@ dbPromise.then(function(db) {
   document.getElementById('appearance-option').addEventListener('change', function() {
     settings.appearance = this.value;
     updateSettingsOS.call(this);
-    document.getElementById('appearance-style').setAttribute('href', 'styles/' + settings.appearance.toLowerCase() + '.css');
+    if(settings.appearance.toLowerCase() === 'auto'){
+      document.getElementById('appearance-style').setAttribute('href', 'styles/' + (darkModeMediaQuery.matches ? 'Dark' : 'Light').toLowerCase() + '.css')
+      darkModeMediaQuery.addListener((e) => {
+        document.getElementById('appearance-style').setAttribute('href', 'styles/' + (e.matches ? 'Dark' : 'Light').toLowerCase() + '.css')
+      })
+    }
+    else {
+      document.getElementById('appearance-style').setAttribute('href', 'styles/' + settings.appearance.toLowerCase() + '.css')          
+    }
   }, {passive:false});
   
   document.getElementById('font-option').addEventListener('change', function() {
@@ -229,9 +247,9 @@ dbPromise.then(function(db) {
     for(let i = 0, max = apps.pathNodes.length; i < max; i = i + 1){
       apps.pathNodes[i].removeAttribute('style');
       const stroke = updateAllottedTime.call(this) !== settings.allottedTime[i] ? apps.stroke * settings.allottedTime[i] / updateAllottedTime.call(this) : apps.stroke;
-      const cssText = '@keyframes pre-' + i + ' {from { stroke-dashoffset: ' + apps.stroke + '; } to { stroke-dashoffset: ' + (settings.animationDirection ? stroke : apps.stroke - stroke) + '; }}'
+      const cssText = '@keyframes pre-' + i + ' {from { stroke-dashoffset: ' + apps.stroke + 'px; } to { stroke-dashoffset: ' + (settings.animationDirection ? stroke : apps.stroke - stroke) + 'px; }}'
                     + "\n"
-                    + '@keyframes dash-' + i + ' {from { stroke-dashoffset: ' + (settings.animationDirection ? stroke : apps.stroke - stroke) + '; } to { stroke-dashoffset: ' + (settings.animationDirection ? 0 : apps.stroke) + '; }}';
+                    + '@keyframes dash-' + i + ' {from { stroke-dashoffset: ' + (settings.animationDirection ? stroke : apps.stroke - stroke) + 'px; } to { stroke-dashoffset: ' + (settings.animationDirection ? 0 : apps.stroke) + 'px; }}';
       const textNode = document.createTextNode(cssText);
       apps.styleNode.appendChild(textNode);
       document.getElementsByTagName('head')[0].appendChild(apps.styleNode);
@@ -245,9 +263,7 @@ dbPromise.then(function(db) {
         apps.pathNodes[i].style.webkitAnimationPlayState = 'paused';
         this.style.strokeDashoffset = (settings.animationDirection ? stroke : 0) + 'px';
         this.style.animationDuration = settings.allottedTime[i] + 's';
-        if(window.chrome) {
-          apps.pathNodes[i].style.webkitAnimationName = 'dash-' + i;
-        }
+        apps.pathNodes[i].style.webkitAnimationName = 'dash-' + i;
       }, {passive:false});
     }
   };
@@ -553,6 +569,9 @@ dbPromise.then(function(db) {
   document.getElementById('start-btn').addEventListener('click', function() {
     apps.isDelayPaused && apps.isPaused ? resumeTimer.call(this) : stopTimer.call(this);
     updateStartBtn.call(this);
+    if(settings.beep === 1){
+      audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+    }
   }, {passive:false});
   
   for(let i = 0, max = apps.timeBoardNodes.length; i < max; i = i + 1) {
@@ -576,11 +595,9 @@ dbPromise.then(function(db) {
    * Methods to beep sound
    *
    ****************************************************************************/
-
-  const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
   
   const beep = function(){
-    if(settings.beep === 1) {
+    if(settings.beep === 0) {
       return false;
     }
   	const volume = 0.1
