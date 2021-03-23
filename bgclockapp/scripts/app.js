@@ -222,7 +222,7 @@ dbPromise.then(function(db) {
   document.getElementById('turn-option').addEventListener('change', function() {
     settings.firstPlayer = settings.turnNow = Number(this.value);
     updateSettingsOS.call(this);
-    //resetClock.call(this);
+    resetClock.call(this);
   }, {passive:false});
 
   /* SWIPE SETTING FOR TURN OPTION */
@@ -252,6 +252,14 @@ dbPromise.then(function(db) {
       settings.firstPlayer = settings.turnNow = (dist < 0) ? 0 : 1;
       updateSettingsOS.call(this);
       resetClock.call(this);
+
+      const options = document.getElementById('turn-option')
+      for(let i = 0, max = options.length; i < max; i++) {
+        if(Number(options[i].value) === settings.firstPlayer) {
+          options[i].selected = true
+          return false
+        }
+      }
     }
   
     isTouched = false
