@@ -39,7 +39,7 @@
       return  (   settings.allottedTime[0] === updateAllottedTime.call(this)
               &&  settings.allottedTime[1] === updateAllottedTime.call(this)
               &&  settings.turnCount === 0
-              &&  settings.firstPlayer === settings.turnNow) ? true : false;
+              &&  settings.firstPlayer === settings.turnNow) ? false : true;
     },
     styleNode: document.createElement('style'),
     startBtnLabels: { startLabel: 'Start', resumeLabel: 'Resume', stopLabel: 'Stop' }
@@ -225,6 +225,39 @@ dbPromise.then(function(db) {
     //resetClock.call(this);
   }, {passive:false});
 
+  /* SWIPE SETTING FOR TURN OPTION */
+  let isTouched = false
+  let isSwiped = false
+  let basePoint = 0
+  let dist = 0
+  document.getElementById('board-pane').addEventListener('touchstart', (e)=>{
+    isTouched = true
+    basePoint = e.touches[0].clientX
+  }, {passive:false})
+  
+  document.getElementById('board-pane').addEventListener('touchmove', (e)=>{
+    if(!isTouched) {
+      return false
+    }
+    dist = e.touches[0].clientX - basePoint
+    isSwiped = (Math.abs(e.touches[0].clientX - basePoint) > 0) ? true : false  
+  }, {passive:false})
+  
+  document.getElementById('board-pane').addEventListener('touchend', (e)=>{
+    if(!isTouched || !isSwiped) {
+      return false
+    }
+  
+    if(!apps.isStarted && document.getElementById('start-btn').children[0].textContent === apps.startBtnLabels.startLabel) {
+      settings.firstPlayer = settings.turnNow = (dist < 0) ? 0 : 1;
+      updateSettingsOS.call(this);
+      resetClock.call(this);
+    }
+  
+    isTouched = false
+    isSwiped = false
+  }, {passive:false})
+
   /*****************************************************************************
    *
    * Methods to update on Board Pane UI
@@ -281,7 +314,7 @@ dbPromise.then(function(db) {
   const updateStartBtn = function(){
     document.getElementById('start-btn').style.display = (settings.allottedTime[0] === 0 || settings.allottedTime[1] === 0) ? 'none' : 'block';
     if(apps.isDelayPaused && apps.isPaused) {
-      document.getElementById('start-btn').children[0].textContent = apps.isStarted ? apps.startBtnLabels.startLabel : apps.startBtnLabels.resumeLabel;
+      document.getElementById('start-btn').children[0].textContent = apps.isStarted ? apps.startBtnLabels.resumeLabel : apps.startBtnLabels.startLabel;
     } else {
       document.getElementById('start-btn').children[0].textContent = apps.startBtnLabels.stopLabel;
     }
@@ -388,7 +421,7 @@ dbPromise.then(function(db) {
   };
 
   const updateResetBtn = function(){
-    if(apps.isStarted) {
+    if(!apps.isStarted) {
       document.getElementById('reset').removeEventListener('click', getUndoData, {passive:false});
       document.getElementById('reset').classList.add('disabled');
     } else {
