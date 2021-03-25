@@ -248,11 +248,11 @@ dbPromise.then(function(db) {
       return false
     }
   
-    if(!apps.isStarted && document.getElementById('start-btn').children[0].textContent !== apps.startBtnLabels.stopLabel) {
+    if(document.getElementById('start-btn').children[0].textContent !== apps.startBtnLabels.stopLabel) {
       settings.firstPlayer = settings.turnNow = (dist < 0) ? 0 : 1;
       updateSettingsOS.call(this);
-      resetClock.call(this);
-
+      resetStyleClockPane.call(this);
+    
       const options = document.getElementById('turn-option')
       for(let i = 0, max = options.length; i < max; i++) {
         if(Number(options[i].value) === settings.firstPlayer) {
