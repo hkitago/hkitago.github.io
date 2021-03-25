@@ -248,7 +248,7 @@ dbPromise.then(function(db) {
       return false
     }
   
-    if(!apps.isStarted && document.getElementById('start-btn').children[0].textContent === apps.startBtnLabels.startLabel) {
+    if(!apps.isStarted && document.getElementById('start-btn').children[0].textContent !== apps.startBtnLabels.stopLabel) {
       settings.firstPlayer = settings.turnNow = (dist < 0) ? 0 : 1;
       updateSettingsOS.call(this);
       resetClock.call(this);
