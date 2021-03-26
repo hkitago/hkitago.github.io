@@ -6,6 +6,7 @@
     appearance: 'Dark',
     font: 'System Default',
     language: 'English',
+    tapIntval: 2000,
     gameFor: 'Match',
     matchTo: 3,
     isCrawford: false,
@@ -73,6 +74,7 @@
         document.getElementById('appearance-option').value = settings.appearance;
         document.getElementById('font-option').value = settings.font;
         document.getElementById('language-option').value = settings.language;
+        document.getElementById('tapintval-option').value = settings.tapIntval / 1000;
         document.getElementById('game-option').value = settings.gameFor;
         document.getElementById('pts-option').value = settings.matchTo;
 
@@ -138,6 +140,11 @@
     settings.language = this.value;
     updateSettingsOS.call(this);
     localizeStrings.call(this);
+  });
+
+  document.getElementById('tapintval-option').addEventListener('change', function() {
+    settings.tapIntval = Number(this.value) * 1000;
+    updateSettingsOS.call(this);
   });
 
   document.getElementById('game-option').addEventListener('change', function() {
@@ -441,10 +448,10 @@
   
     setTimeout(function(){
       flipContainerNode.remove();
-    }, 500);
+    }, settings.tapIntval * 0.25);
 
     // Add to LogsOS
-    addIntvalID = setTimeout(addLogs, 2000);
+    addIntvalID = setTimeout(addLogs, settings.tapIntval);
   };
 
   const addLogs = function(){
