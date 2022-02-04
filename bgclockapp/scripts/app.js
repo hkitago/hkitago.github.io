@@ -362,8 +362,7 @@ dbPromise.then(function(db) {
           apps.delayBoardNode.classList.add('disabled');
           resolve.call(this);
         }
-        //apps.delayBoardNode.children[0].textContent = parseFloat(apps.remainingDelayTime).toFixed(0);
-        apps.delayBoardNode.children[0].textContent = parseInt(apps.remainingDelayTime);
+        apps.delayBoardNode.children[0].textContent = Math.trunc(apps.remainingDelayTime);
       }, 50);
     });
   };
