@@ -1,5 +1,5 @@
 const dataCacheName = 'bgClockAppData-v1';
-const cacheName = 'bgClockApp-7';
+const cacheName = 'bgClockApp-8';
 const filesToCache = [
   './',
   './index.html',
