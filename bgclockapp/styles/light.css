@@ -2,7 +2,7 @@ input, select {color:#212121;}
 .settings-pane {background-color:#DEDEDE; color:#212121;}
 #settings-section > ul > li#undo span {background:#212121; color:#DEDEDE;}
 .time-board {color:#212121;}
-.board-pane {background-color:#DEDEDE;color:#212121;}
+#board-pane {background-color:#DEDEDE;color:#212121;}
 #delay-time {color:#212121;}
 .path {stroke:#212121;}
 @keyframes glow {

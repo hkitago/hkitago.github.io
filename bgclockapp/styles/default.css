@@ -14,7 +14,7 @@ body {background-color:black;}
 /* hide back of pane during swap */
 #board-pane, .settings-pane {backface-visibility:hidden; -webkit-backface-visibility:hidden; position:absolute; top:0; left:0;}
 /* front pane, placed above back */
-#board-pane {z-index:2; display:flex; background-color:#212121; border-radius:10px;}
+#board-pane {z-index:2; display:flex; border-radius:10px;}
 /* back, initially hidden pane */
 .settings-pane {z-index:1; transform:rotateX(-180deg); background-color:#212121; color:#DEDEDE; border-radius:10px;}
 
