@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<title>Canvas Noise</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<style>
+* {-webkit-tap-highlight-color:rgba(0,0,0,0); -webkit-user-select:none; -webkit-touch-callout:none;box-sizing: border-box;}
+html, body {overflow:hidden; width:100%; height:100%; margin:0; padding:0; font-size:100%; font-family:-apple-system,Roboto,'Droid Sans',sans-serif;}
+ul{list-style:none;padding:0;margin:0;overflow:hidden;}
+body > section {position:absolute; top:0; left:0; width:100%; height:100%; overflow:hidden;}
+
+canvas {
+	position: absolute;
+	z-index: 9999;
+	/*pointer-events: none;*/
+	user-select: none;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	background: #000;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+h1,h2 {
+	color: #fff;
+	margin: 0;
+	text-shadow: 0 0 5px rgb(0 0 0/.9);
+	-webkit-font-smoothing: antialiased;
+}
+
+h1 {
+	font-size: 6rem;
+}
+
+h2 {
+	font-size: 1rem;
+}
+</style>
+</head>
+<body>
+<canvas class="noise swipe"></canvas>
+
+<h1>Noise</h1>
+<h2>Use Wheel or Swipe.</h2>
+<script>(()=>{
+'use strict'
+// https://codepen.io/fawority/pen/aVqWey
+// technique for this demo found here 
+// http://stackoverflow.com/questions/22003491/animating-canvas-to-look-like-tv-noise
+
+const canvas = document.querySelector('canvas'),
+				 ctx = canvas.getContext('2d')
+
+canvas.width = canvas.height = 256
+
+const resize = () => {
+	canvas.width = window.innerWidth * window.devicePixelRatio
+	canvas.height = window.innerHeight * window.devicePixelRatio
+	canvas.style.width = window.innerWidth + 'px'
+	canvas.style.height = window.innerHeight + 'px'
+}
+resize()
+window.onresize = resize
+
+const noise = (ctx) => {    
+	const w = ctx.canvas.width,
+				h = ctx.canvas.height,
+				iData = ctx.createImageData(w, h),
+				buffer32 = new Uint32Array(iData.data.buffer),
+				len = buffer32.length
+	for(let i = 0; i < len; i++)
+		if (Math.random() < 0.5) buffer32[i] = 0xffffffff
+		ctx.putImageData(iData, 0, 0)
+}
+
+(function loop() {
+	noise(ctx)
+	requestAnimationFrame(loop)
+})()
+
+
+let scale = 0.5
+canvas.style.opacity = scale
+addEventListener('wheel', (e) => {
+	//e.preventDefault()
+	scale = scale + event.deltaY * -1 * 0.001
+	canvas.style.opacity = Math.min(Math.max(0, scale), 1)
+}, { passive: true })
+
+/*****************************************************************************
+ * Swipe
+ ****************************************************************************/
+const swipeNodes = document.querySelectorAll('.swipe')
+let isTouched = false
+const basePoint = {'x': 0, 'y': 0, }
+Array.from(swipeNodes).map((x) => {
+  x.addEventListener('touchstart', (e) => {
+    e.preventDefault()
+    isTouched = true
+    basePoint['x'] = e.touches[0].clientX
+    basePoint['y'] = e.touches[0].clientY
+  })
+  x.addEventListener('touchmove', (e) => {
+    if(!isTouched) {return false}
+    e.preventDefault()
+    const distPoint = {'x': e.touches[0].clientX - basePoint['x'],'y': e.touches[0].clientY - basePoint['y'],}
+		scale = scale + distPoint['y'] * 0.0001
+		canvas.style.opacity = Math.min(Math.max(0, scale), 1)
+  })
+  x.addEventListener('touchend', (e) => {
+    if(!isTouched) {return false}
+    e.preventDefault()
+    isTouched = false
+		canvas.style.opacity = scale
+  })
+})
+
+
+
+})()</script>
