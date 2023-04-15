@@ -89,12 +89,13 @@ const noise = (ctx) => {
 })()
 
 
-let scale = 0.5
-canvas.style.opacity = scale
+let theOpacity = 0.5
+canvas.style.opacity = theOpacity
 addEventListener('wheel', (e) => {
 	//e.preventDefault()
-	scale = scale + event.deltaY * -1 * 0.001
-	canvas.style.opacity = Math.min(Math.max(0, scale), 1)
+	theOpacity = theOpacity + event.deltaY * -1 * 0.001
+	theOpacity = Math.min(Math.max(0, theOpacity), 1)
+	canvas.style.opacity = theOpacity
 }, { passive: true })
 
 /*****************************************************************************
@@ -102,26 +103,29 @@ addEventListener('wheel', (e) => {
  ****************************************************************************/
 const swipeNodes = document.querySelectorAll('.swipe')
 let isTouched = false
-const basePoint = {'x': 0, 'y': 0, }
+const basePoint = {'x': 0, 'y': 0, 'opacity': Number(canvas.style.opacity), }
 Array.from(swipeNodes).map((x) => {
   x.addEventListener('touchstart', (e) => {
     e.preventDefault()
     isTouched = true
     basePoint['x'] = e.touches[0].clientX
     basePoint['y'] = e.touches[0].clientY
+    basePoint['opacity'] = Number(e.target.style.opacity)
   })
   x.addEventListener('touchmove', (e) => {
     if(!isTouched) {return false}
     e.preventDefault()
     const distPoint = {'x': e.touches[0].clientX - basePoint['x'],'y': e.touches[0].clientY - basePoint['y'],}
-		scale = scale + distPoint['y'] * 0.0001
-		canvas.style.opacity = Math.min(Math.max(0, scale), 1)
+		theOpacity = basePoint['opacity'] + distPoint['y'] * 0.001
+		theOpacity = Math.min(Math.max(0, theOpacity), 1)
+		canvas.style.opacity = theOpacity
+		console.log(canvas.style.opacity)
   })
   x.addEventListener('touchend', (e) => {
     if(!isTouched) {return false}
     e.preventDefault()
     isTouched = false
-		canvas.style.opacity = scale
+    basePoint['opacity'] = theOpacity
   })
 })
 
