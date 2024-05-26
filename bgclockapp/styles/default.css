@@ -21,7 +21,7 @@ body {background-color:black;}
 /* Board-Pane */
 .time-board {width:45%; position:relative; font-size:8vw; text-align:center; pointer-events:auto;}
 #board-pane .disabled {opacity:.3;}
-.time-board > span {width:100%; position:absolute; top:50%; left:0; transform: translateY(-50%); font-variant-numeric: tabular-nums; font-feature-settings: 'tnum';}
+.time-board > span {width:100%; position:absolute; top:50%; left:0; transform: translateY(-50%); font-variant-numeric: tabular-nums; /*font-feature-settings: 'tnum';*/}
 .time-board > span.hover {animation-timing-function:linear; animation-duration:.2s; animation-name:glow;}
 
 svg {position:absolute; top:0; left:0; width:100%; height:100%;}
