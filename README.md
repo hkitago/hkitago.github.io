@@ -30,4 +30,4 @@ This site is open-source and available under the [MIT License](LICENSE). Feel fr
 
 ## Contact
 
-You can reach me via [email](mailto:hkitago@gmail.com) or follow me on [Twitter aka X](https://x.com/hkitago) or [BlueSky](https://bsky.app/profile/hkitago.bsky.social).
+You can reach me via [email](mailto:hkitago@gmail.com) or follow me on [Twitter aka X](https://x.com/hkitago).
