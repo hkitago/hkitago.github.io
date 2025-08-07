@@ -65,33 +65,63 @@ footer > p > a {color:white;}
 <script>
 const glitchDiv = document.querySelector('.glitch');
 
+// contenteditable中の擬似要素を更新
 function syncDataText() {
   glitchDiv.dataset.text = glitchDiv.textContent;
 }
 
-function toggleEditable() {
-  const editable = glitchDiv.getAttribute('contenteditable') === 'true';
-  if (editable) {
-    // 編集モード解除
-    glitchDiv.setAttribute('contenteditable', 'false');
-    glitchDiv.style.outline = 'none';
-  } else {
-    // 編集モードON
-    glitchDiv.setAttribute('contenteditable', 'true');
-    glitchDiv.style.outline = '2px solid #0ff'; // 編集中を視覚的に表示
-    glitchDiv.focus();
-  }
+// カーソルを常に末尾に置く
+function moveCursorToEnd(el) {
+  const range = document.createRange();
+  const sel = window.getSelection();
+  range.selectNodeContents(el);
+  range.collapse(false); // false = 末尾にカーソル
+  sel.removeAllRanges();
+  sel.addRange(range);
 }
 
-// クリックで切り替え
-glitchDiv.addEventListener('click', toggleEditable);
+// 編集モードON
+function enableEditing() {
+  glitchDiv.setAttribute('contenteditable', 'true');
+  glitchDiv.style.outline = '2px solid #0ff';
+  glitchDiv.focus();
+  moveCursorToEnd(glitchDiv);
+}
 
-// 編集時にdata-textを更新
+// 編集モードOFF
+function disableEditing() {
+  glitchDiv.setAttribute('contenteditable', 'false');
+  glitchDiv.style.outline = 'none';
+  glitchDiv.blur();
+}
+
+// クリックで編集ON（OFFにはしない）
+glitchDiv.addEventListener('click', () => {
+  if (glitchDiv.getAttribute('contenteditable') !== 'true') {
+    enableEditing();
+  }
+});
+
+// 入力時にdata-textを同期
 glitchDiv.addEventListener('input', syncDataText);
+
+// Enterキーで編集終了
+glitchDiv.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault(); // 改行防止
+    disableEditing();
+  }
+});
+
+// フォーカスが外れたら編集モード終了
+glitchDiv.addEventListener('blur', () => {
+  disableEditing();
+});
 
 // 初期同期
 syncDataText();
 </script>
+
 <script src="glitchtextcss.js"></script>
   <footer><p><a href="https://github.com/hkitago/hkitago.github.io/tree/master/glitchtextcssjs">Project Page</a></p></footer>
 </body></html>
