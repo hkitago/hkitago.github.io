@@ -47,6 +47,23 @@ body{  background:black; font-family:-apple-system, 'Arial Black', sans-serif; f
 </style>
 </head>
 <body>
-<div class="glitch" data-text="グリッチ">グリッチ</div>
-<script src="glitchtextcss.js"></script>
+<div
+  class="glitch"
+  contenteditable="true"
+  spellcheck="false"
+  data-text="グリッチ"
+  aria-label="グリッチ効果を試す編集可能テキスト"
+>グリッチ</div>
+
+<script>
+const glitchDiv = document.querySelector('.glitch');
+const syncDataText = () => {
+  glitchDiv.dataset.text = glitchDiv.textContent;
+};
+glitchDiv.addEventListener('input', syncDataText);
+
+syncDataText();
+</script>
+
+  <script src="glitchtextcss.js"></script>
 </body></html>
