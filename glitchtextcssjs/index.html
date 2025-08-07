@@ -53,7 +53,7 @@ footer > p > a {color:white;}
 </style>
 </head>
 <body>
-<div
+<div id="glitch" 
   class="glitch"
   contenteditable="false"
   spellcheck="false"
@@ -63,37 +63,38 @@ footer > p > a {color:white;}
 >グリッチ</div>
 
 <script>
-const glitchDiv = document.querySelector('.glitch');
+//const glitchDiv = document.querySelector('.glitch');
+const glitchDiv = document.getElementById('glitch');
 
 // contenteditable中の擬似要素を更新
-function syncDataText() {
+const syncDataText = () => {
   glitchDiv.dataset.text = glitchDiv.textContent;
-}
+};
 
 // カーソルを常に末尾に置く
-function moveCursorToEnd(el) {
+const moveCursorToEnd = (el) => {
   const range = document.createRange();
   const sel = window.getSelection();
   range.selectNodeContents(el);
   range.collapse(false); // false = 末尾にカーソル
   sel.removeAllRanges();
   sel.addRange(range);
-}
+};
 
 // 編集モードON
-function enableEditing() {
+const enableEditing = () => {
   glitchDiv.setAttribute('contenteditable', 'true');
   glitchDiv.style.outline = '2px solid #0ff';
   glitchDiv.focus();
   moveCursorToEnd(glitchDiv);
-}
+};
 
 // 編集モードOFF
-function disableEditing() {
+const disableEditing = () => {
   glitchDiv.setAttribute('contenteditable', 'false');
   glitchDiv.style.outline = 'none';
   glitchDiv.blur();
-}
+};
 
 // クリックで編集ON（OFFにはしない）
 glitchDiv.addEventListener('click', () => {
