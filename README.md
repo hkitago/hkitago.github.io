@@ -17,7 +17,7 @@ This site is hosted on GitHub Pages and uses [Jekyll](https://jekyllrb.com/) for
 To learn more about the content of this site, check out the following sections:
 
 - Projects: Details on my ongoing and completed projects.
-- [Blog](hkitago.com): Read my latest articles and posts.
+- [Blog](https://hkitago.com/): Read my latest articles and posts.
 - Contact: How to get in touch with me.
 
 ## Contributing
