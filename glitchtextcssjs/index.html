@@ -49,21 +49,42 @@ body{  background:black; font-family:-apple-system, 'Arial Black', sans-serif; f
 <body>
 <div
   class="glitch"
-  contenteditable="true"
+  contenteditable="false"
   spellcheck="false"
   data-text="グリッチ"
   aria-label="グリッチ効果を試す編集可能テキスト"
+  tabindex="0"
 >グリッチ</div>
 
 <script>
 const glitchDiv = document.querySelector('.glitch');
-const syncDataText = () => {
+
+function syncDataText() {
   glitchDiv.dataset.text = glitchDiv.textContent;
-};
+}
+
+function toggleEditable() {
+  const editable = glitchDiv.getAttribute('contenteditable') === 'true';
+  if (editable) {
+    // 編集モード解除
+    glitchDiv.setAttribute('contenteditable', 'false');
+    glitchDiv.style.outline = 'none';
+  } else {
+    // 編集モードON
+    glitchDiv.setAttribute('contenteditable', 'true');
+    glitchDiv.style.outline = '2px solid #0ff'; // 編集中を視覚的に表示
+    glitchDiv.focus();
+  }
+}
+
+// クリックで切り替え
+glitchDiv.addEventListener('click', toggleEditable);
+
+// 編集時にdata-textを更新
 glitchDiv.addEventListener('input', syncDataText);
 
+// 初期同期
 syncDataText();
 </script>
-
-  <script src="glitchtextcss.js"></script>
+<script src="glitchtextcss.js"></script>
 </body></html>
