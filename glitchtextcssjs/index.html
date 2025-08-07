@@ -12,6 +12,7 @@ body{  background:black; font-family:-apple-system, 'Arial Black', sans-serif; f
   font-weight:800;
   overflow:hidden;
   white-space: nowrap;
+  outline: none;
 }
 .glitch::before,
 .glitch::after {
@@ -84,7 +85,6 @@ const moveCursorToEnd = (el) => {
 // 編集モードON
 const enableEditing = () => {
   glitchDiv.setAttribute('contenteditable', 'true');
-  glitchDiv.style.outline = '2px solid #0ff';
   glitchDiv.focus();
   moveCursorToEnd(glitchDiv);
 };
@@ -92,7 +92,6 @@ const enableEditing = () => {
 // 編集モードOFF
 const disableEditing = () => {
   glitchDiv.setAttribute('contenteditable', 'false');
-  glitchDiv.style.outline = 'none';
   glitchDiv.blur();
 };
 
